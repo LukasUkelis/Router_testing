@@ -14,7 +14,7 @@ class formatData:
   def openNewWriter(self):
     now = datetime.now()
     dt_string = now.strftime('%d-%m-%Y_%H-%M-%S')
-    fileName = 'Testing_{time}.csv'.format(time=dt_string)
+    fileName = '{deviceName}_testing_{time}.csv'.format(deviceName=self.__deviceInfo['deviceName'],time=dt_string)
     self.__fileName = './Results/{filename}'.format(filename= fileName)
     self.__writer = open(self.__fileName,'w')
     return self.__fileName
@@ -25,9 +25,11 @@ class formatData:
     time.sleep(1)
 
   def writeTitle(self):
+      self.__writer.write("Device name: {deviceName}\r\n".format(deviceName=self.__deviceInfo['deviceName']))
       self.__writer.write("Address: {address}\r\n".format(address=self.__deviceInfo['address']))
       self.__writer.write("Port: {address}\r\n".format(address=self.__deviceInfo['port']))
       self.__writer.write("Modbus port: {address}\r\n\r\n".format(address=self.__deviceInfo['modPort']))
+      self.__writer.write("Testing modules: {address}\r\n\r\n".format(address=self.__deviceInfo['modules']))
       rowWriter = csv.DictWriter(self.__writer,fieldnames=self.__fieldNames)
       rowWriter.writeheader()
       self.__writer.flush()

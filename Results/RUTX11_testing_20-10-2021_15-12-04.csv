@@ -1,0 +1,22 @@
+Device name: RUTX11
+Address: 192.168.1.1
+Port: 22
+Modbus port: 502
+
+Testing modules: ['system', 'gps', 'mobile', 'dual_sim']
+
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+GPS latitude coordinate,1000010010110111001100001110001,54.898867,Failed
+GPS satellite count,8,8,Passed
+GPS longitude coordinate,1000001101111111011100000110101,23.964945,Failed
+GPS speed,0,0.000000,Passed
+GPS accuracy,1063675494,0.900000,Failed
+Mobile data sent today (SIM1),819666876,819666876,Passed
+Mobile data received today (SIM1),35579172,35579172,Passed
+Mobile data received this week (SIM1),819950760,819950760,Passed
+Mobile data sent this week (SIM1),35769360,35769360,Passed
+Mobile data received this month (SIM1),819950760,819950760,Passed
+Mobile data sent this month (SIM1),35769360,False,Failed

@@ -116,7 +116,9 @@ class Testing:
     if(len(modulesList)==0):
       print(f"{colors.FAIL}No modules to check{colors.ENDC}")
     else:
-      self.__csvWriter = CSV.formatData(connectionInfo)
+      deviceName = self.__getSSHAnswer("uci get system.@system[0].routername")
+      deviceInfo = {'address':connectionInfo['address'],'port':connectionInfo['port'],'modPort':connectionInfo['modPort'],'deviceName':deviceName,'modules':modulesList}
+      self.__csvWriter = CSV.formatData(deviceInfo)
       self.__csvWriter.openNewWriter()
       self.__csvWriter.writeTitle()
       print("\n"*9)
