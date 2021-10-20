@@ -1,0 +1,134 @@
+{
+  "modules":
+  [
+    {
+      "moduleName":"system",
+      "commands":
+      [
+        {
+          "commandValue" : "System hostname",
+          "returnFormat" : "string",
+          "registerAddress" : "7",
+          "numberOfReg" : "16",
+          "sshCommand" : "ubus call system board | jsonfilter -e '@.hostname'" 
+        },
+        {
+          "commandValue" : "LAN MAC address",
+          "returnFormat" : "string",
+          "registerAddress" : "55",
+          "numberOfReg" : "16",
+          "sshCommand" : "ubus call mnfinfo get | jsonfilter -e '@.mnfinfo.mac'" 
+        },
+        {
+          "commandValue" : "Router name",
+          "returnFormat" : "string",
+          "registerAddress" : "71",
+          "numberOfReg" : "16",
+          "sshCommand" : "uci get system.@system[0].routername" 
+        }
+      ]
+    },
+    {
+      "moduleName":"dual_sim",
+      "commands":
+      [
+        {
+          "commandValue" : "Active SIM card",
+          "returnFormat" : "int",
+          "registerAddress" : "205",
+          "numberOfReg" : "1",
+          "sshCommand" : "ubus call sim get | jsonfilter -e '@.sim'" 
+        }
+      ]
+    },
+    {
+      "moduleName":"gps",
+      "commands":
+      [
+        {
+          "commandValue" : "GPS latitude coordinate",
+          "returnFormat" : "float",
+          "registerAddress" : "143",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.latitude'" 
+        },
+        {
+          "commandValue" : "GPS satellite count",
+          "returnFormat" : "int",
+          "registerAddress" : "181",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.satellites'" 
+        },
+        {
+          "commandValue" : "GPS longitude coordinate",
+          "returnFormat" : "float",
+          "registerAddress" : "145",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.longitude'" 
+        },
+        {
+          "commandValue" : "GPS speed",
+          "returnFormat" : "int",
+          "registerAddress" : "179",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.speed'" 
+        },
+        {
+          "commandValue" : "GPS accuracy",
+          "returnFormat" : "int",
+          "registerAddress" : "183",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.accuracy'" 
+        }
+      ]
+    },
+    {
+      "moduleName":"mobile",
+      "commands":
+      [
+        {
+          "commandValue" : "Mobile data sent today (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "185",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus  call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}' | jsonfilter -e '@.rx'" 
+        },
+        {
+          "commandValue" : "Mobile data received today (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "187",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" 
+        },
+        {
+          "commandValue" : "Mobile data received this week (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "189",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" 
+        },
+        {
+          "commandValue" : "Mobile data sent this week (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "191",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" 
+        },
+        {
+          "commandValue" : "Mobile data received this month (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "193",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" 
+        },
+        {
+          "commandValue" : "Mobile data sent this month (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "195",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" 
+        }
+      ]
+    }
+  ]
+}
