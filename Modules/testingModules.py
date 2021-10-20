@@ -1,16 +1,16 @@
-from os import truncate
-from time import process_time_ns, sleep
+import Modules.dataParser as dataParser 
+import Modules.sshConection as sshConection
+import Modules.moduleDataSepar as moduleDataSepar
+import Modules.modbusConnection as modbusConnection
+import Modules.writingToCSV as CSV
+import Modules.colors as colors
 import time
-import dataParser 
-import sshConection
-import moduleDataSepar
-import modbusConnection
-import colors
 
 class Testing:
   __data = None
   __ssh = None
   __modbus = None
+  __csvWriter = None
   def __init__(self):
       pass
 
@@ -48,7 +48,6 @@ class Testing:
 
   def __getRouterModules(self):
     listToCheck = ["gps","mobile","dual_sim"]
-    # listToCheck = ["gps"]
     modulesList = ['system']
     for element in listToCheck:
       answer = self.__getSSHAnswer(f"uci get hwinfo.@hwinfo[0].{element}")
@@ -79,26 +78,20 @@ class Testing:
     data = self.__data.getModule(id)
     sep = moduleDataSepar.Separate(data)
     id = 0
-    # print("-----------------------------------------------------------")
-    # print(f"""
-    #   {colors.OKBLUE}{moduleName}{colors.ENDC} module
-    #   Testing {sep.getCommandsCount()} targets.
-
-    #   Testing target:  
-    #   Modbus answer:  
-    #   SSH answer: 
-    #   Passed:
-    #   Failed:""")
     while id < sep.getCommandsCount():
       sshCommand = sep.getSshCommand(id)
       modbusCommand = sep.getModbusCommand(id)
       modAnswer = self.__getModbusAnswer(modbusCommand)
       sshAnswer = self.__getSSHAnswer(sshCommand)
-      # print(self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat']))
+      status = "Error"
       if not self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat']):
         failed = failed+1
+        status = "Failed"
       else:
         passed= passed +1
+        status = "Passed"
+      self.__writeToCsv({'target':sep.getSection(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
+
       print(f"""{goback}     
       {colors.OKBLUE}{moduleName}{colors.ENDC} module             
       Testing {colors.OKBLUE}{sep.getCommandsCount()}{colors.ENDC} targets.
@@ -108,14 +101,13 @@ class Testing:
       SSH answer: {colors.OKBLUE}{sshAnswer}{colors.ENDC}                             
       Passed: {colors.OKGREEN}{passed}{colors.ENDC}
       Failed: {colors.FAIL}{failed}{colors.ENDC}""")
-      time.sleep(1)
+      time.sleep(0.5)
       id = id +1
-  def __writeToCSV(self,rowData):
-    pass
 
+  def __writeToCsv(self,data):
+    self.__csvWriter.writeAnswer(data)
 
-  def testModules(self):
-    connectionInfo={'address':"192.168.1.1",'username':"root",'port':"22",'password':"Admin123",'modPort':"502"}
+  def startTesting(self,connectionInfo):
     if not self.__getModulesTestData():
       return False
     if not self.__connectToSshAndModbus(connectionInfo):
@@ -124,11 +116,15 @@ class Testing:
     if(len(modulesList)==0):
       print(f"{colors.FAIL}No modules to check{colors.ENDC}")
     else:
+      self.__csvWriter = CSV.formatData(connectionInfo)
+      self.__csvWriter.openNewWriter()
+      self.__csvWriter.writeTitle()
       print("\n"*9)
-      for module in modulesList:
-        self.__testModule(module)
-    self.__closeSshAndModbus()
-
-  
-s = Testing()
-s.testModules()
+      while True:
+        try:
+          for module in modulesList:
+            self.__testModule(module)
+        except KeyboardInterrupt:
+          self.__closeSshAndModbus()
+          print("Testing ended")
+          return False

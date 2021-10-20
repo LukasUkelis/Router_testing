@@ -1,5 +1,6 @@
 import json
-import colors as colors
+import Modules.colors as colors
+
 class Data:
   __data = None
   __dataPath  = 'data.json'

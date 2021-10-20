@@ -1,6 +1,6 @@
 import paramiko
 import time
-import colors
+import Modules.colors as colors
 class Connection:
   __ssh = None
   __connectionInfo = None

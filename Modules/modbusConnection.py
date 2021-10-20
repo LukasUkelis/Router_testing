@@ -1,7 +1,7 @@
 from pyModbusTCP.client import ModbusClient
-import codecs
-import colors
+import Modules.colors as colors
 import time
+import codecs
 
 class Connection:
   __connectionInfo = None
