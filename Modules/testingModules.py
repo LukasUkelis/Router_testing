@@ -13,9 +13,12 @@ class Testing:
   __modbus = None
   __csvWriter = None
   __console = None
+  __testingCout = 0
+  __running = True
+  __connectionInfo = None
 
-  def __init__(self):
-      pass
+  def __init__(self,connectionInfo):
+    self.__connectionInfo = connectionInfo
 
   def __getModulesTestData(self):
     self.__data = dataParser.Data()
@@ -24,15 +27,16 @@ class Testing:
     return True
     
     
-  def __connectToSshAndModbus(self,connectionInfo):
-    self.__ssh = sshConection.Connection(connectionInfo)
-    self.__modbus = modbusConnection.Connection(connectionInfo)
+  def __connectToSshAndModbus(self):
+    self.__ssh = sshConection.Connection(self.__connectionInfo)
+    self.__modbus = modbusConnection.Connection(self.__connectionInfo)
     if not self.__ssh.connect() or not self.__modbus.connect():
       return False
     return True
 
 
   def __closeSshAndModbus(self):
+    self.__modbus.closeConnection()
     self.__ssh.closeConnection()
 
 
@@ -107,26 +111,26 @@ class Testing:
       compared = self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat'])
       if (compared!="Error"):
         if not compared:
-          failed = failed+1
+          failed +=1
           status = "Failed"
         else:
-          passed= passed +1
+          passed +=1
           status = "Passed"
       self.__writeToCsv({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
       ramUsage = self.__getRamUsage()
-      testInfo = {'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':passed,'failed':failed,'ramUsage':ramUsage}
-      
+      self.__testingCout += 1
+      testInfo = {'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':passed,'failed':failed,'ramUsage':ramUsage,'testCount':self.__testingCout}
       self.__console.writeTestInfo(testInfo)
-      id = id +1
+      id += 1
 
   def __writeToCsv(self,data):
     self.__csvWriter.writeAnswer(data)
 
-  def startTesting(self,connectionInfo):
+  def startTesting(self):
     
     if not self.__getModulesTestData():
       return False
-    if not self.__connectToSshAndModbus(connectionInfo):
+    if not self.__connectToSshAndModbus():
       return False
     modulesList = self.__getRouterModules()
     if(len(modulesList)==0):
@@ -135,15 +139,21 @@ class Testing:
       self.__console  = consoleWriting.writing()
       self.__console.startWriting()
       deviceName = self.__getSSHAnswer("uci get system.@system[0].routername")
-      deviceInfo = {'address':connectionInfo['address'],'port':connectionInfo['port'],'modPort':connectionInfo['modPort'],'deviceName':deviceName,'modules':modulesList}
+      deviceInfo = {'address':self.__connectionInfo['address'],'port':self.__connectionInfo['port'],'modPort':self.__connectionInfo['modPort'],'deviceName':deviceName,'modules':modulesList}
       self.__csvWriter = CSV.formatData(deviceInfo)
       self.__csvWriter.openNewWriter()
       self.__csvWriter.writeTitle()
       while True:
-        try:
-          for module in modulesList:
-            self.__testModule(module)
-        except KeyboardInterrupt:
-          self.__closeSshAndModbus()
-          print("Testing ended")
-          return False
+        for module in modulesList:
+          if(self.__running == False):
+            self.__closeSshAndModbus()
+            return True
+          self.__testModule(module)
+      
+
+  def stopTesting(self):
+    self.__console.writeErrorInfo(f"{colors.WARNING}After finishing testing current module program will exit{colors.ENDC}")
+    self.__running = False
+    
+
+

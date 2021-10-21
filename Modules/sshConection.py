@@ -37,7 +37,7 @@ class Connection:
   def executeCommand(self,command):
     try:
       stdin, stdout, stderr = self.__ssh.exec_command(command)
-      time.sleep(0.5)
+      time.sleep(0.1)
       lines = stdout.readlines()
     except:
       error  = f"{colors.WARNING}{command}{colors.FAIL} can`t be executed{colors.ENDC}"

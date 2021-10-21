@@ -24,10 +24,13 @@ class Connection:
       print(f"{colors.FAIL}Modbus connection can not be established. Check: address and port, ensure that router supports modbus{colors.ENDC}")
       return False
     return True
+
   def refresh(self):
     self.__client.close()
-    time.sleep(0.2)
     self.__client.open()
+
+  def closeConnection(self):
+    self.__client.close()
 
 
   def formatint(self,values):
