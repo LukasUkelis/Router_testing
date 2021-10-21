@@ -2,7 +2,7 @@ import Modules.colors as colors
 import time
 
 class writing:
-  __goback = "\033[F" * 11
+  __goback = "\033[F" * 12
   def __init__(self):
     pass
   def startWriting(self):
@@ -16,9 +16,11 @@ class writing:
                                                            
                                                            
                                                            
+                                                            
       """)
   
   def writeErrorInfo(self,errorInfo):
+    time.sleep(0.5)
     print(f"""{self.__goback}     
                                                            
                                                            
@@ -29,8 +31,9 @@ class writing:
                                                            
                                                            
                                                            
+                                                           
     """)
-    time.sleep(1)
+    time.sleep(0.5)
     self.__clearconsole()
   
   def __clearconsole(self):
@@ -44,6 +47,7 @@ class writing:
                                                                                                                       
                                                                                                                       
                                                                                                                       
+                                                                                                                       
       """)
 
   def writeTestInfo(self, testInfo):
@@ -58,4 +62,5 @@ SSH answer: {colors.OKBLUE}{testInfo['sshAnswer']}{colors.ENDC}
 Passed: {colors.OKGREEN}{testInfo['passed']}{colors.ENDC}
 Failed: {colors.FAIL}{testInfo['failed']}{colors.ENDC}
 
+Memory usage: {testInfo['ramUsage']}
 """)

@@ -49,6 +49,19 @@ class Testing:
       return False
     return answer
   
+  def __getRamUsage(self):
+    total = int(self.__getSSHAnswer("ubus call system info | jsonfilter -e '@.memory.total'"))
+    free = int(self.__getSSHAnswer("ubus call system info | jsonfilter -e '@.memory.free'"))
+    using = int(total - free)
+    usage =round(using / total * 100,2)
+    if(usage > 65 and usage <= 80):
+      return f"{colors.WARNING}{usage} %{colors.ENDC}"
+    if(usage > 80):
+      return f"{colors.FAIL}{usage} %{colors.ENDC}"
+    return f"{colors.OKGREEN}{usage} %{colors.ENDC}"
+
+
+
 
   def __getRouterModules(self):
     listToCheck = self.__data.getModulesNames()
@@ -100,7 +113,9 @@ class Testing:
           passed= passed +1
           status = "Passed"
       self.__writeToCsv({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
-      testInfo = {'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':passed,'failed':failed}
+      ramUsage = self.__getRamUsage()
+      testInfo = {'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':passed,'failed':failed,'ramUsage':ramUsage}
+      
       self.__console.writeTestInfo(testInfo)
       id = id +1
 

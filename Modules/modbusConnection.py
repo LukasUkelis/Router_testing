@@ -46,7 +46,7 @@ class Connection:
       temp = temp[2:len(temp)]
       temp = ("0"*(16-len(temp)))+temp
       answer = answer + temp
-    return f"{int(answer)}"
+    return f"{float(answer)}"
 
   def formatsignal(self,values):
     answer = ""

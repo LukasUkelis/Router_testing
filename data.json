@@ -7,7 +7,7 @@
       [
         {
           "target" : "System hostname",
-          "returnFormat" : "String",
+          "returnFormat" : "string",
           "registerAddress" : "7",
           "numberOfReg" : "16",
           "sshCommand" : "ubus call system board | jsonfilter -e '@.hostname'" 
@@ -46,25 +46,11 @@
       "targets":
       [
         {
-          "target" : "GPS latitude coordinate",
-          "returnFormat" : "float",
-          "registerAddress" : "143",
-          "numberOfReg" : "2",
-          "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.latitude'" 
-        },
-        {
           "target" : "GPS satellite count",
           "returnFormat" : "int",
           "registerAddress" : "181",
           "numberOfReg" : "2",
           "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.satellites'" 
-        },
-        {
-          "target" : "GPS longitude coordinate",
-          "returnFormat" : "float",
-          "registerAddress" : "145",
-          "numberOfReg" : "2",
-          "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.longitude'" 
         },
         {
           "target" : "GPS speed",
@@ -75,7 +61,7 @@
         },
         {
           "target" : "GPS accuracy",
-          "returnFormat" : "int",
+          "returnFormat" : "float",
           "registerAddress" : "183",
           "numberOfReg" : "2",
           "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.accuracy'" 
