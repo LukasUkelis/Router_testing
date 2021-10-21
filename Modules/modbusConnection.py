@@ -1,4 +1,5 @@
 from pyModbusTCP.client import ModbusClient
+from pyModbusTCP.utils import reset_bit
 import Modules.colors as colors
 import time
 import codecs
@@ -26,7 +27,7 @@ class Connection:
     self.__client.open()
 
 
-  def __formatInt(self,values):
+  def formatint(self,values):
     answer = ""
     for value in values:
       temp = bin(value)
@@ -35,7 +36,7 @@ class Connection:
       answer = answer + temp
     return f"{int(answer,2)}"
 
-  def __formatFloat(self,values):
+  def formatfloat(self,values):
     answer = ""
     for value in values:
       temp = bin(value)
@@ -44,8 +45,25 @@ class Connection:
       answer = answer + temp
     return f"{int(answer)}"
 
+  def formatsignal(self,values):
+    answer = ""
+    value = values[1]
+    temp = bin(~value & 0xFFFF )
+    temp = temp[2:len(temp)]
+    add = "1".zfill(16)
+    temp = temp.zfill(16)
+    carry =0
+    for i in range(16 -1,-1,-1):
+      r = carry
+      r += 1 if temp[i] == '1' else 0
+      r += 1 if add[i] == '1' else 0
+      answer = ('1' if r % 2 == 1 else '0')+answer
+      carry = 0 if r <2 else 1
+    if carry !=0:
+        answer = '1'+answer
+    return answer
 
-  def __formatHexString(self,values):
+  def formatstring(self,values):
     answer = ""
     for value in values:
       temp = hex(value)
@@ -55,7 +73,7 @@ class Connection:
         answer = answer + temp
     return answer
     
-  def __formatIP(self,values):
+  def formatip(self,values):
     answer=""
     for value in values:
       temp = bin(value)
@@ -69,6 +87,10 @@ class Connection:
         answer = f"{answer}.{ip1}.{ip2}"
       i = 1
     return answer
+  def __dynamicFormatCall(self,formatType,values):
+    methodName = f"format{formatType}"
+    method = getattr(self,methodName)
+    return method(values)
 
   def readReg(self,readInfo):
     try:
@@ -78,13 +100,6 @@ class Connection:
       return False
 
     if (values != None):
-      if(readInfo['returnFormat']=="string"):
-        return self.__formatHexString(values)
-      if(readInfo['returnFormat']=="int"):
-        return self.__formatInt(values)
-      if(readInfo['returnFormat']=="ip"):
-        return self.__formatIP(values) 
-      if(readInfo['returnFormat']=="float"):
-        return self.__formatFloat(values)
+      return self.__dynamicFormatCall(readInfo['returnFormat'],values)
     print(f"{colors.FAIL}Can't get information from {colors.OKBLUE}{readInfo['registerAddress']}{colors.FAIL} register{colors.ENDC}")
     return False
