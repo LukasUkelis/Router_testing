@@ -23,7 +23,7 @@ class Connection:
     return True
   def refresh(self):
     self.__client.close()
-    time.sleep(0.4)
+    time.sleep(0.2)
     self.__client.open()
 
 
@@ -87,10 +87,14 @@ class Connection:
         answer = f"{answer}.{ip1}.{ip2}"
       i = 1
     return answer
+
   def __dynamicFormatCall(self,formatType,values):
     methodName = f"format{formatType}"
-    method = getattr(self,methodName)
-    return method(values)
+    try:
+      method = getattr(self,methodName)
+      return method(values)
+    except:
+      print(f"{colors.FAIL}No instructions for how to format {colors.WARNING}{formatType}{colors.ENDC}")
 
   def readReg(self,readInfo):
     try:
@@ -98,7 +102,6 @@ class Connection:
     except:
       print(f"{colors.FAIL}Can't get information from {colors.OKBLUE}{readInfo['registerAddress']}{colors.FAIL} register{colors.ENDC}")
       return False
-
     if (values != None):
       return self.__dynamicFormatCall(readInfo['returnFormat'],values)
     print(f"{colors.FAIL}Can't get information from {colors.OKBLUE}{readInfo['registerAddress']}{colors.FAIL} register{colors.ENDC}")

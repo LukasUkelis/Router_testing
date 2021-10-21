@@ -2,7 +2,7 @@
   "modules":
   [
     {
-      "moduleName":"system",
+      "moduleName":"ios",
       "commands":
       [
         {

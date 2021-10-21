@@ -1,0 +1,39 @@
+Device name: RUTX11
+Address: 192.168.1.1
+Port: 22
+Modbus port: 502
+
+Testing modules: ['dual_sim', 'gps', 'mobile']
+
+Target,Modbus answer,SSH answer,Status
+Active SIM card,1,1,Passed
+GPS latitude coordinate,1000010010110111001100001110011,54.898877,Failed
+GPS satellite count,8,8,Passed
+GPS longitude coordinate,1000001101111111011100000001100,23.964867,Failed
+GPS speed,0,0.000000,Passed
+GPS accuracy,1061997773,0.800000,Failed
+Mobile data sent today (SIM1),53925234,54585276,Failed
+Mobile data received today (SIM1),19925470,20417239,Failed
+Mobile data received this week (SIM1),873852167,873852167,Passed
+Mobile data sent this week (SIM1),55672644,55672644,Passed
+Mobile data received this month (SIM1),873852167,873852944,Failed
+Mobile data sent this month (SIM1),55673218,55673218,Passed
+Active SIM card,1,1,Passed
+GPS latitude coordinate,1000010010110111001100001110011,54.898877,Failed
+GPS satellite count,6,6,Passed
+GPS longitude coordinate,1000001101111111011100000001100,23.964867,Failed
+GPS speed,0,0.000000,Passed
+GPS accuracy,1065353216,1.100000,Failed
+Mobile data sent today (SIM1),54016934,54676976,Failed
+Mobile data received today (SIM1),20026292,20518061,Failed
+Mobile data received this week (SIM1),873943867,873943867,Passed
+Mobile data sent this week (SIM1),55773466,55773466,Passed
+Mobile data received this month (SIM1),873943867,873943867,Passed
+Mobile data sent this month (SIM1),55773466,55773466,Passed
+Active SIM card,1,1,Passed
+GPS latitude coordinate,1000010010110111001100001110011,54.898877,Failed
+GPS satellite count,4,4,Passed
+GPS longitude coordinate,1000001101111111011100000001100,23.964867,Failed
+GPS speed,0,0.000000,Passed
+GPS accuracy,1067869798,1.300000,Failed
+Mobile data sent today (SIM1),54017904,54677946,Failed

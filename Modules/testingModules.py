@@ -38,6 +38,7 @@ class Testing:
     if not answer:
       return False
     return answer
+
   def __getModbusAnswer(self,command):
     answer = self.__modbus.readReg(command)
     self.__modbus.refresh()
@@ -57,6 +58,8 @@ class Testing:
     return modulesList
 
   def __compareAnswers(self,sshAnswer,modbusAnswer,format):
+    if not sshAnswer or not modbusAnswer:
+      return "Error"
     if(format == "int"):
       try:
         if(int(sshAnswer)==int(modbusAnswer)):
@@ -85,12 +88,14 @@ class Testing:
       modAnswer = self.__getModbusAnswer(modbusCommand)
       sshAnswer = self.__getSSHAnswer(sshCommand)
       status = "Error"
-      if not self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat']):
-        failed = failed+1
-        status = "Failed"
-      else:
-        passed= passed +1
-        status = "Passed"
+      compared = self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat'])
+      if (compared!="Error"):
+        if not compared:
+          failed = failed+1
+          status = "Failed"
+        else:
+          passed= passed +1
+          status = "Passed"
       self.__writeToCsv({'target':sep.getSection(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
 
       print(f"""{goback}     
