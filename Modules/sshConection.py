@@ -22,9 +22,12 @@ class Connection:
     return True
 
   def __parsingLines(self, lines):
-    line = lines[0]
-    line =line.strip("\n")
-    return line
+    try:
+      line = lines[0]
+      line =line.strip("\n")
+      return line
+    except IndexError: 
+      return False
 
     
     
@@ -35,6 +38,9 @@ class Connection:
       lines = stdout.readlines()
     except:
       print(f"{colors.WARNING}{command}{colors.FAIL} can`t be executed{colors.ENDC}")
+      return False
+    if not self.__parsingLines(lines):
+      print(f"{colors.WARNING}{command}{colors.FAIL} does`t return answer{colors.ENDC}")
       return False
     return self.__parsingLines(lines)
     

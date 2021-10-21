@@ -16,7 +16,7 @@ class Data:
       print(f"{colors.WARNING}{self.__dataPath}{colors.FAIL} file do not exists{colors.ENDC}")
       return False
 
-  def checkModuleExists(self,moduleName):
+  def getModuleID(self,moduleName):
     id = 0
     for module in self.__data['modules']:
       if(module['moduleName']==moduleName):
@@ -25,6 +25,12 @@ class Data:
       id = id +1
     print(f"{colors.WARNING}No instrucions how to test {colors.OKBLUE}{moduleName}{colors.WARNING} module{colors.ENDC}")
     return -1
+  
+  def getModulesNames(self):
+    modulesList = []
+    for module in self.__data['modules']:
+      modulesList.append(module['moduleName'])
+    return modulesList
 
   def getModule(self,id):
     try:
