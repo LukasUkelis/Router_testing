@@ -21,10 +21,7 @@ class Data:
     for module in self.__data['modules']:
       if(module['moduleName']==moduleName):
         return id
-        break
       id = id +1
-    print(f"{colors.WARNING}No instrucions how to test {colors.OKBLUE}{moduleName}{colors.WARNING} module{colors.ENDC}")
-    return -1
   
   def getModulesNames(self):
     modulesList = []

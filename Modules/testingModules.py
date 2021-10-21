@@ -4,6 +4,7 @@ import Modules.moduleDataSepar as moduleDataSepar
 import Modules.modbusConnection as modbusConnection
 import Modules.writingToCSV as CSV
 import Modules.colors as colors
+import Modules.writingToConsole as consoleWriting
 import time
 
 class Testing:
@@ -11,6 +12,8 @@ class Testing:
   __ssh = None
   __modbus = None
   __csvWriter = None
+  __console = None
+
   def __init__(self):
       pass
 
@@ -82,9 +85,9 @@ class Testing:
     data = self.__data.getModule(id)
     sep = moduleDataSepar.Separate(data)
     id = 0
-    while id < sep.getCommandsCount():
+    while id < sep.getTargetsCount():
       sshCommand = sep.getSshCommand(id)
-      modbusCommand = sep.getModbusCommand(id)
+      modbusCommand = sep.getModbusInstructions(id)
       modAnswer = self.__getModbusAnswer(modbusCommand)
       sshAnswer = self.__getSSHAnswer(sshCommand)
       status = "Error"
@@ -96,26 +99,16 @@ class Testing:
         else:
           passed= passed +1
           status = "Passed"
-      self.__writeToCsv({'target':sep.getSection(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
-
-      print(f"""{goback}     
-{colors.OKBLUE}{moduleName}{colors.ENDC} module             
-Testing {colors.OKBLUE}{sep.getCommandsCount()}{colors.ENDC} targets.
-                
-Testing target:  {colors.OKBLUE}{sep.getSection(id)}{colors.ENDC}                                  
-Modbus answer: {colors.OKBLUE}{modAnswer}{colors.ENDC}                               
-SSH answer: {colors.OKBLUE}{sshAnswer}{colors.ENDC}                             
-Passed: {colors.OKGREEN}{passed}{colors.ENDC}
-Failed: {colors.FAIL}{failed}{colors.ENDC}
-
-""")
-      time.sleep(0.5)
+      self.__writeToCsv({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
+      testInfo = {'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':passed,'failed':failed}
+      self.__console.writeTestInfo(testInfo)
       id = id +1
 
   def __writeToCsv(self,data):
     self.__csvWriter.writeAnswer(data)
 
   def startTesting(self,connectionInfo):
+    
     if not self.__getModulesTestData():
       return False
     if not self.__connectToSshAndModbus(connectionInfo):
@@ -124,12 +117,13 @@ Failed: {colors.FAIL}{failed}{colors.ENDC}
     if(len(modulesList)==0):
       print(f"{colors.FAIL}No modules to check{colors.ENDC}")
     else:
+      self.__console  = consoleWriting.writing()
+      self.__console.startWriting()
       deviceName = self.__getSSHAnswer("uci get system.@system[0].routername")
       deviceInfo = {'address':connectionInfo['address'],'port':connectionInfo['port'],'modPort':connectionInfo['modPort'],'deviceName':deviceName,'modules':modulesList}
       self.__csvWriter = CSV.formatData(deviceInfo)
       self.__csvWriter.openNewWriter()
       self.__csvWriter.writeTitle()
-      print("\n"*11)
       while True:
         try:
           for module in modulesList:

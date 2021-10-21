@@ -1,11 +1,13 @@
 import paramiko
 import time
+import Modules.writingToConsole as consoleWriting
 import Modules.colors as colors
 class Connection:
   __ssh = None
   __connectionInfo = None
   def __init__(self,connectionInfo):
     self.__connectionInfo = connectionInfo
+    self.__console = consoleWriting.writing()
 
   def connect(self):
     host = self.__connectionInfo['address']
@@ -18,6 +20,7 @@ class Connection:
       self.__ssh.connect(host,port=port,username=username,password=password)
     except:
       print(f"{colors.FAIL}SSH connection can not be established. Check: address, username, password and port{colors.ENDC}")
+      time.sleep(1)
       return False
     return True
 
@@ -37,10 +40,12 @@ class Connection:
       time.sleep(0.5)
       lines = stdout.readlines()
     except:
-      print(f"{colors.WARNING}{command}{colors.FAIL} can`t be executed{colors.ENDC}")
+      error  = f"{colors.WARNING}{command}{colors.FAIL} can`t be executed{colors.ENDC}"
+      self.__console.writeErrorInfo(error)
       return False
     if not self.__parsingLines(lines):
-      print(f"{colors.WARNING}{command}{colors.FAIL} does`t return answer{colors.ENDC}")
+      error  = f"{colors.WARNING}{command}{colors.FAIL} does`t return answer{colors.ENDC}"
+      self.__console.writeErrorInfo(error)
       return False
     return self.__parsingLines(lines)
     

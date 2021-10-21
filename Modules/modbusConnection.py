@@ -1,5 +1,5 @@
 from pyModbusTCP.client import ModbusClient
-from pyModbusTCP.utils import reset_bit
+import Modules.writingToConsole as consoleWriting
 import Modules.colors as colors
 import time
 import codecs
@@ -7,8 +7,11 @@ import codecs
 class Connection:
   __connectionInfo = None
   __client = None
+  __console = None
+
   def __init__(self,connectionInfo):
     self.__connectionInfo = connectionInfo
+    self.__console = consoleWriting.writing()
     
   def connect(self):
     try:
@@ -94,15 +97,18 @@ class Connection:
       method = getattr(self,methodName)
       return method(values)
     except:
-      print(f"{colors.FAIL}No instructions for how to format {colors.WARNING}{formatType}{colors.ENDC}")
+      error  = f"{colors.FAIL}No instructions for how to format {colors.WARNING}{formatType}{colors.ENDC}"
+      self.__console.writeErrorInfo(error)
 
   def readReg(self,readInfo):
     try:
       values = self.__client.read_holding_registers(int(readInfo['registerAddress']),int(readInfo['numberOfReg']))
     except:
-      print(f"{colors.FAIL}Can't get information from {colors.OKBLUE}{readInfo['registerAddress']}{colors.FAIL} register{colors.ENDC}")
+      error  = f"{colors.FAIL}Can't get information from {colors.OKBLUE}{readInfo['registerAddress']}{colors.FAIL} register{colors.ENDC}"
+      self.__console.writeErrorInfo(error)
       return False
     if (values != None):
       return self.__dynamicFormatCall(readInfo['returnFormat'],values)
-    print(f"{colors.FAIL}Can't get information from {colors.OKBLUE}{readInfo['registerAddress']}{colors.FAIL} register{colors.ENDC}")
+    error  = f"{colors.FAIL}Can't get information from {colors.OKBLUE}{readInfo['registerAddress']}{colors.FAIL} register{colors.ENDC}"
+    self.__console.writeErrorInfo(error)
     return False
