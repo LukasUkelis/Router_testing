@@ -3,8 +3,10 @@ import time
 
 class writing:
   __goback = "\033[F" * 13
+  
   def __init__(self):
     pass
+
   def startWriting(self):
     print(f"""                                             
                                                            

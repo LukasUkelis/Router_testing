@@ -16,6 +16,7 @@ class Testing:
   __testingCout = 0
   __running = True
   __connectionInfo = None
+  __totalTestingTime = 0
 
   def __init__(self,connectionInfo):
     self.__connectionInfo = connectionInfo
@@ -87,6 +88,12 @@ class Testing:
       except:
         if(float(sshAnswer)==float(modbusAnswer)):
           return True
+    if(format == "float"):
+      lowerLen  = min(len(str(sshAnswer).split('.')[1]),len(str(modbusAnswer).split('.')[1]))
+      sshAnswer = round(float(sshAnswer),lowerLen)
+      modbusAnswer = round(float(modbusAnswer),lowerLen)
+      if(sshAnswer==modbusAnswer):
+        return True
     if(format == "string"):
       if(sshAnswer==modbusAnswer):
         return True
@@ -118,7 +125,6 @@ class Testing:
           status = "Passed"
       self.__writeToCsv({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
       ramUsage = self.__getRamUsage()
-      self.__testingCout += 1
       testInfo = {'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':passed,'failed':failed,'ramUsage':ramUsage,'testCount':self.__testingCout}
       self.__console.writeTestInfo(testInfo)
       id += 1
@@ -144,6 +150,7 @@ class Testing:
       self.__csvWriter.openNewWriter()
       self.__csvWriter.writeTitle()
       while True:
+        self.__testingCout += 1
         for module in modulesList:
           if(self.__running == False):
             self.__closeSshAndModbus()

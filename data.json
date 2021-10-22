@@ -130,6 +130,20 @@
           "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.speed'" 
         },
         {
+          "target" : "GPS latitude coordinate",
+          "returnFormat" : "float",
+          "registerAddress" : "143",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.latitude'" 
+        },
+        {
+          "target" : "GPS longitude coordinate",
+          "returnFormat" : "float",
+          "registerAddress" : "145",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call gpsd position | jsonfilter -e '@.longitude'" 
+        },
+        {
           "target" : "GPS accuracy",
           "returnFormat" : "float",
           "registerAddress" : "183",

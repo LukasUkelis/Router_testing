@@ -1,8 +1,8 @@
 from pyModbusTCP.client import ModbusClient
 import Modules.writingToConsole as consoleWriting
 import Modules.colors as colors
-import time
 import codecs
+import struct
 
 class Connection:
   __connectionInfo = None
@@ -44,12 +44,10 @@ class Connection:
 
   def formatfloat(self,values):
     answer = ""
-    for value in values:
-      temp = bin(value)
-      temp = temp[2:len(temp)]
-      temp = ("0"*(16-len(temp)))+temp
-      answer = answer + temp
-    return f"{float(answer)}"
+    answer = int(values[0])*65536+int(values[1])
+    answer = hex(answer)
+    answer = struct.unpack('!f', bytes.fromhex(answer[2:len(answer)]))[0]
+    return f"{answer}"
 
   def formatsignal(self,values):
     answer = ""
