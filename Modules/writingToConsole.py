@@ -2,13 +2,15 @@ import Modules.colors as colors
 import time
 
 class writing:
-  __goback = "\033[F" * 13
+  __goback = "\033[F" * 14
   
   def __init__(self):
     pass
 
   def startWriting(self):
-    print(f"""                                             
+    print(f"""       
+
+
                                                            
                                                            
                                                            
@@ -25,6 +27,7 @@ class writing:
   def writeErrorInfo(self,errorInfo):
     time.sleep(0.5)
     print(f"""{self.__goback}     
+                                                           
                                                            
                                                            
                                                            
@@ -67,6 +70,7 @@ SSH answer: {colors.OKBLUE}{testInfo['sshAnswer']}{colors.ENDC}
 Passed: {colors.OKGREEN}{testInfo['passed']}{colors.ENDC}     
 Failed: {colors.FAIL}{testInfo['failed']}{colors.ENDC}    
 
+Test duration: {colors.OKBLUE}{testInfo['currentTime']}{colors.ENDC} 
 Test count: {colors.OKBLUE}{testInfo['testCount']}{colors.ENDC}  
 Memory usage: {testInfo['ramUsage']}  
 """)

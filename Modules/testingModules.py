@@ -5,6 +5,7 @@ import Modules.modbusConnection as modbusConnection
 import Modules.writingToCSV as CSV
 import Modules.colors as colors
 import Modules.writingToConsole as consoleWriting
+import time
 
 class Testing:
   __data = None
@@ -15,6 +16,9 @@ class Testing:
   __testingCout = 0
   __running = True
   __connectionInfo = None
+  __startTime = None
+  __passed = 0
+  __failed = 0
   
 
   def __init__(self):
@@ -64,6 +68,16 @@ class Testing:
       return f"{colors.FAIL}{usage} %{colors.ENDC}"
     return f"{colors.OKGREEN}{usage} %{colors.ENDC}"
   
+  def __timeUpdate(self):
+    current = round(time.time() - self.__startTime)
+    mi = current/60
+    mi = str(mi).split('.')[0]
+    h = int(mi)/60
+    h = str(mi).split('.')[0]
+    mi = int(mi)%60
+    sec = round(current%60)
+    return f" {h}h. {mi}min. {sec}s."
+  
 
 
 
@@ -79,29 +93,35 @@ class Testing:
 
   def __compareAnswers(self,sshAnswer,modbusAnswer,format):
     if not sshAnswer or not modbusAnswer:
+      self.__failed +=1
       return "Error"
     if(format == "int"):
       try:
-        if(int(sshAnswer)==int(modbusAnswer)):
-          return True
+        sshAnswer = int(sshAnswer)
+        modbusAnswer =int(modbusAnswer)
       except:
-        if(float(sshAnswer)==float(modbusAnswer)):
-          return True
+        sshAnswer = float(sshAnswer)
+        modbusAnswer = float(modbusAnswer)
+      if(sshAnswer==modbusAnswer):
+        self.__passed+=1
+        return "Passed"
     if(format == "float"):
       lowerLen  = min(len(str(sshAnswer).split('.')[1]),len(str(modbusAnswer).split('.')[1]))
       sshAnswer = round(float(sshAnswer),lowerLen)
       modbusAnswer = round(float(modbusAnswer),lowerLen)
       if(sshAnswer==modbusAnswer):
-        return True
+        self.__passed+=1
+        return "Passed"
     if(format == "string"):
       if(sshAnswer==modbusAnswer):
-        return True
-    return False
+        self.__passed+=1
+        return "Passed"
+    self.__failed +=1
+    return "Failed"
 
   def __testModule(self,moduleName):
-    goback = "\033[F" * 11
-    passed = 0
-    failed = 0
+    self.__passed = 0
+    self.__failed = 0
     id = self.__data.getModuleID(moduleName)
     if (id == -1):
       return False
@@ -113,18 +133,9 @@ class Testing:
       modbusCommand = sep.getModbusInstructions(id)
       modAnswer = self.__getModbusAnswer(modbusCommand)
       sshAnswer = self.__getSSHAnswer(sshCommand)
-      status = "Error"
-      compared = self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat'])
-      if (compared!="Error"):
-        if not compared:
-          failed +=1
-          status = "Failed"
-        else:
-          passed +=1
-          status = "Passed"
+      status = self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat'])
       self.__writeToCsv({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
-      ramUsage = self.__getRamUsage()
-      testInfo = {'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':passed,'failed':failed,'ramUsage':ramUsage,'testCount':self.__testingCout}
+      testInfo = {'currentTime':self.__timeUpdate(),'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__getRamUsage(),'testCount':self.__testingCout}
       self.__console.writeTestInfo(testInfo)
       id += 1
 
@@ -132,6 +143,8 @@ class Testing:
     self.__csvWriter.writeAnswer(data)
 
   def startTesting(self,connectionInfo):
+    
+
     self.__connectionInfo = connectionInfo
     if not self.__getModulesTestData():
       return False
@@ -148,6 +161,7 @@ class Testing:
       self.__csvWriter = CSV.formatData(deviceInfo)
       self.__csvWriter.openNewWriter()
       self.__csvWriter.writeTitle()
+      self.__startTime = time.time()
       while True:
         self.__testingCout += 1
         for module in modulesList:
