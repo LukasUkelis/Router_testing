@@ -5,7 +5,6 @@ import Modules.modbusConnection as modbusConnection
 import Modules.writingToCSV as CSV
 import Modules.colors as colors
 import Modules.writingToConsole as consoleWriting
-import time
 
 class Testing:
   __data = None
@@ -16,10 +15,10 @@ class Testing:
   __testingCout = 0
   __running = True
   __connectionInfo = None
-  __totalTestingTime = 0
+  
 
-  def __init__(self,connectionInfo):
-    self.__connectionInfo = connectionInfo
+  def __init__(self):
+    pass
 
   def __getModulesTestData(self):
     self.__data = dataParser.Data()
@@ -64,7 +63,7 @@ class Testing:
     if(usage > 80):
       return f"{colors.FAIL}{usage} %{colors.ENDC}"
     return f"{colors.OKGREEN}{usage} %{colors.ENDC}"
-
+  
 
 
 
@@ -132,8 +131,8 @@ class Testing:
   def __writeToCsv(self,data):
     self.__csvWriter.writeAnswer(data)
 
-  def startTesting(self):
-    
+  def startTesting(self,connectionInfo):
+    self.__connectionInfo = connectionInfo
     if not self.__getModulesTestData():
       return False
     if not self.__connectToSshAndModbus():

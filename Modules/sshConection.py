@@ -20,7 +20,6 @@ class Connection:
       self.__ssh.connect(host,port=port,username=username,password=password)
     except:
       print(f"{colors.FAIL}SSH connection can not be established. Check: address, username, password and port{colors.ENDC}")
-      time.sleep(1)
       return False
     return True
 
@@ -37,7 +36,6 @@ class Connection:
   def executeCommand(self,command):
     try:
       stdin, stdout, stderr = self.__ssh.exec_command(command)
-      time.sleep(0.1)
       lines = stdout.readlines()
     except:
       error  = f"{colors.WARNING}{command}{colors.FAIL} can`t be executed{colors.ENDC}"
