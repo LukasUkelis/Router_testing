@@ -159,16 +159,16 @@
         {
           "target" : "Mobile data sent today (SIM1)",
           "returnFormat" : "int",
-          "registerAddress" : "185",
+          "registerAddress" : "187",
           "numberOfReg" : "2",
-          "sshCommand" : "ubus  call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}' | jsonfilter -e '@.rx'" 
+          "sshCommand" : "ubus  call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}' | jsonfilter -e '@.tx'" 
         },
         {
           "target" : "Mobile data received today (SIM1)",
           "returnFormat" : "int",
-          "registerAddress" : "187",
+          "registerAddress" : "185",
           "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" 
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" 
         },
         {
           "target" : "Mobile data received this week (SIM1)",

@@ -25,14 +25,22 @@ class formatData:
     self.__writer.close()
     time.sleep(1)
 
+  def writeNewHeader(self,testNumber):
+      rowWriter = csv.DictWriter(self.__writer,fieldnames=self.__fieldNames)
+      self.__writer.write(f"\r\nTest: {testNumber}\r\n")
+      rowWriter.writeheader()
+      self.__writer.flush()
+    
+  def writeConclusions(self, conclusionData):
+      self.__writer.write("\r\n")
+
+
   def writeTitle(self):
       self.__writer.write("Device name: {deviceName}\r\n".format(deviceName=self.__deviceInfo['deviceName']))
       self.__writer.write("Address: {address}\r\n".format(address=self.__deviceInfo['address']))
       self.__writer.write("Port: {address}\r\n".format(address=self.__deviceInfo['port']))
       self.__writer.write("Modbus port: {address}\r\n\r\n".format(address=self.__deviceInfo['modPort']))
       self.__writer.write("Testing modules: {address}\r\n\r\n".format(address=self.__deviceInfo['modules']))
-      rowWriter = csv.DictWriter(self.__writer,fieldnames=self.__fieldNames)
-      rowWriter.writeheader()
       self.__writer.flush()
 
   def writeAnswer(self, answerData):

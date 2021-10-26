@@ -2,15 +2,15 @@ import Modules.colors as colors
 import time
 
 class writing:
-  __goback = "\033[F" * 14
+  __goback = "\033[F" * 15
   
   def __init__(self):
     pass
 
   def startWriting(self):
     print(f"""       
-
-
+                                                           
+                                                          
                                                            
                                                            
                                                            
@@ -35,7 +35,8 @@ class writing:
 {colors.FAIL}{errorInfo}{colors.ENDC}        
                                                            
                                                            
-                                                           
+                                                  
+                                                  
                                                            
                                                               
                                                            
@@ -53,8 +54,10 @@ class writing:
                                                                                                                       
                                                                                                                       
                                                                                                                       
+                                                                                                                    
                                                                                                                       
-                                                                                              
+                                                                                                                      
+                                                                                                                      
                                                                                                                        
       """)
 
@@ -69,6 +72,7 @@ Modbus answer: {colors.OKBLUE}{testInfo['modAnswer']}{colors.ENDC}
 SSH answer: {colors.OKBLUE}{testInfo['sshAnswer']}{colors.ENDC}                                     
 Passed: {colors.OKGREEN}{testInfo['passed']}{colors.ENDC}     
 Failed: {colors.FAIL}{testInfo['failed']}{colors.ENDC}    
+
 
 Test duration: {colors.OKBLUE}{testInfo['currentTime']}{colors.ENDC} 
 Test count: {colors.OKBLUE}{testInfo['testCount']}{colors.ENDC}  

@@ -73,7 +73,7 @@ class Testing:
     mi = current/60
     mi = str(mi).split('.')[0]
     h = int(mi)/60
-    h = str(mi).split('.')[0]
+    h = str(h).split('.')[0]
     mi = int(mi)%60
     sec = round(current%60)
     return f" {h}h. {mi}min. {sec}s."
@@ -164,6 +164,8 @@ class Testing:
       self.__startTime = time.time()
       while True:
         self.__testingCout += 1
+        if(self.__running == True):
+          self.__csvWriter.writeNewHeader(self.__testingCout)
         for module in modulesList:
           if(self.__running == False):
             self.__closeSshAndModbus()
