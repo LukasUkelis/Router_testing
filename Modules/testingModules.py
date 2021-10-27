@@ -29,6 +29,7 @@ class Testing:
   def __init__(self):
     pass
 
+
   def __getModulesTestData(self):
     self.__data = dataParser.Data()
     if not self.__data.openJson():
@@ -55,6 +56,7 @@ class Testing:
       return False
     return answer
 
+
   def __getModbusAnswer(self,command):
     answer = self.__modbus.readReg(command)
     self.__modbus.refresh()
@@ -62,11 +64,13 @@ class Testing:
       return False
     return answer
   
+
   def __getRamUsage(self):
     total = int(self.__getSSHAnswer("ubus call system info | jsonfilter -e '@.memory.total'"))
     free = int(self.__getSSHAnswer("ubus call system info | jsonfilter -e '@.memory.free'"))
     using = int(total - free)
     return round(using / total * 100,2)
+
 
   def __ramUsageFormat(self, ramUsage):
     if(ramUsage > 65 and ramUsage <= 80):
@@ -74,6 +78,7 @@ class Testing:
     if(ramUsage > 80):
       return f"{colors.FAIL}{ramUsage} %{colors.ENDC}"
     return f"{colors.OKGREEN}{ramUsage} %{colors.ENDC}"
+
 
   def __timeFormat(self, Time):
     mi = Time/60
@@ -91,7 +96,6 @@ class Testing:
     return f" {sec}s."
 
 
-
   def __getRouterModules(self):
     listToCheck = self.__data.getModulesNames()
     modulesList = []
@@ -101,6 +105,7 @@ class Testing:
         modulesList.append(element)
     print(f"Testing modules: {colors.OKBLUE}{modulesList}{colors.ENDC}")
     return modulesList
+
 
   def __compareAnswers(self,sshAnswer,modbusAnswer,format):
     if not sshAnswer or not modbusAnswer:
@@ -118,7 +123,6 @@ class Testing:
         return "Passed"
     if(format == "float"):
       lowerLen  = min(len(str(sshAnswer).split('.')[1]),len(str(modbusAnswer).split('.')[1]))
-      
       sshAnswer = round(float(sshAnswer),lowerLen)
       modbusAnswer = round(float(modbusAnswer),lowerLen)
       if(sshAnswer==modbusAnswer):
@@ -131,6 +135,7 @@ class Testing:
     self.__failed +=1
     return "Failed"
 
+
   def __testModule(self,moduleName):
     self.__passed = 0
     self.__failed = 0
@@ -140,14 +145,17 @@ class Testing:
     data = self.__data.getModule(id)
     sep = moduleDataSepar.Separate(data)
     id = 0
-
     while id < sep.getTargetsCount():
+      if not sep.getExtraComand(id):
+        pass
+      else:
+        self.__getSSHAnswer(sep.getExtraComand(id))
       sshCommand = sep.getSshCommand(id)
       modbusCommand = sep.getModbusInstructions(id)
       modAnswer = self.__getModbusAnswer(modbusCommand)
       sshAnswer = self.__getSSHAnswer(sshCommand)
       status = self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat'])
-      self.__writeToCsv({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
+      self.__csvWriter.writeAnswer({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
       ramUsage = self.__getRamUsage()
       testInfo = {'currentTime':self.__timeFormat(time.time()-self.__startTime),'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__ramUsageFormat(ramUsage),'testCount':self.__testingCout}
       self.__console.writeTestInfo(testInfo)
@@ -156,12 +164,7 @@ class Testing:
       id += 1
 
 
-  def __writeToCsv(self,data):
-    self.__csvWriter.writeAnswer(data)
-
   def startTesting(self,connectionInfo):
-    
-
     self.__connectionInfo = connectionInfo
     if not self.__getModulesTestData():
       return False
@@ -202,5 +205,3 @@ class Testing:
     self.__console.writeErrorInfo(f"{colors.WARNING}After finishing testing current module program will exit{colors.ENDC}")
     self.__running = False
     
-
-

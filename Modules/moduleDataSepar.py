@@ -11,6 +11,11 @@ class Separate:
   
   def getTarget(self,id):
     return self.__moduleData['targets'][id]['target']
+  
+  def getExtraComand(self,id):
+    if(self.__moduleData['targets'][id]['extraComand'] == "null"):
+      return False
+    return self.__moduleData['targets'][id]['extraComand']
 
   def getModbusInstructions(self,id):
     return {'registerAddress':self.__moduleData['targets'][id]['registerAddress'],'numberOfReg':self.__moduleData['targets'][id]['numberOfReg'],'returnFormat':self.__moduleData['targets'][id]['returnFormat']}
