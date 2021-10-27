@@ -47,16 +47,16 @@
           "sshCommand" : "ubus call sim get | jsonfilter -e '@.sim'" 
         },
         {
-          "target" : "Mobile data sent today (SIM2)",
+          "target" : "Mobile data received today (SIM2)",
           "returnFormat" : "int",
-          "registerAddress" : "302",
+          "registerAddress" : "300",
           "numberOfReg" : "2",
           "sshCommand" : "ubus  call mdcollect get '{\"period\":\"day\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}' | jsonfilter -e '@.rx'" 
         },
         {
-          "target" : "Mobile data received today (SIM2)",
+          "target" : "Mobile data sent today (SIM2)",
           "returnFormat" : "int",
-          "registerAddress" : "300",
+          "registerAddress" : "302",
           "numberOfReg" : "2",
           "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" 
         },

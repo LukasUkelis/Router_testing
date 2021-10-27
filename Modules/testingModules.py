@@ -118,16 +118,13 @@ class Testing:
         return "Passed"
     if(format == "float"):
       lowerLen  = min(len(str(sshAnswer).split('.')[1]),len(str(modbusAnswer).split('.')[1]))
+      
       sshAnswer = round(float(sshAnswer),lowerLen)
       modbusAnswer = round(float(modbusAnswer),lowerLen)
       if(sshAnswer==modbusAnswer):
         self.__passed+=1
         return "Passed"
-    if(format == "string"):
-      if(sshAnswer==modbusAnswer):
-        self.__passed+=1
-        return "Passed"
-    if(format == "IP"):
+    if(format == "string" or format == "IP"):
       if(sshAnswer==modbusAnswer):
         self.__passed+=1
         return "Passed"

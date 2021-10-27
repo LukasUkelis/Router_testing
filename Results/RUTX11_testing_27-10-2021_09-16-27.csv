@@ -39368,3 +39368,444 @@ GPS longitude coordinate,23.964982986450195,23.964983,Passed
 GPS accuracy,0.8999999761581421,0.900000,Passed
 Mobile data sent today (SIM1),0,0,Passed
 Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 23
+Failed: 2
+
+Test: 1271
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260785,Failed
+Mobile data received today (SIM2),260785,184498,Failed
+Mobile data received this week (SIM2),260785,260785,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260785,260785,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260785,260785,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260785,260785,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898827,Passed
+GPS longitude coordinate,23.964982986450195,23.964983,Passed
+GPS accuracy,0.8999999761581421,0.900000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 23
+Failed: 2
+
+Test: 1272
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260785,Failed
+Mobile data received today (SIM2),260785,184498,Failed
+Mobile data received this week (SIM2),260785,260785,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260785,260785,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260785,260785,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260785,260785,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898827,Passed
+GPS longitude coordinate,23.964981079101562,23.964982,Failed
+GPS accuracy,0.8999999761581421,0.900000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 22
+Failed: 3
+
+Test: 1273
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260825,Failed
+Mobile data received today (SIM2),260825,184498,Failed
+Mobile data received this week (SIM2),260825,260825,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260825,260825,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260825,260825,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260825,260825,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898827,Passed
+GPS longitude coordinate,23.964981079101562,23.964982,Failed
+GPS accuracy,0.8999999761581421,0.900000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 22
+Failed: 3
+
+Test: 1274
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260825,Failed
+Mobile data received today (SIM2),260825,184498,Failed
+Mobile data received this week (SIM2),260825,260825,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260825,260825,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260825,260825,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260825,260825,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,6,6,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898827,Passed
+GPS longitude coordinate,23.964981079101562,23.964982,Failed
+GPS accuracy,1.100000023841858,1.100000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 22
+Failed: 3
+
+Test: 1275
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260865,Failed
+Mobile data received today (SIM2),260865,184498,Failed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898827,Passed
+GPS longitude coordinate,23.964981079101562,23.964982,Failed
+GPS accuracy,1.0,1.000000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 22
+Failed: 3
+
+Test: 1276
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260865,Failed
+Mobile data received today (SIM2),260865,184498,Failed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898827,Passed
+GPS longitude coordinate,23.964981079101562,23.964982,Failed
+GPS accuracy,1.0,1.000000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 22
+Failed: 3
+
+Test: 1277
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260865,Failed
+Mobile data received today (SIM2),260865,184498,Failed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898827,Passed
+GPS longitude coordinate,23.964981079101562,23.964982,Failed
+GPS accuracy,1.0,1.000000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 22
+Failed: 3
+
+Test: 1278
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260865,Failed
+Mobile data received today (SIM2),260865,184498,Failed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898827,Passed
+GPS longitude coordinate,23.964981079101562,23.964982,Failed
+GPS accuracy,0.8999999761581421,0.900000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 22
+Failed: 3
+
+Test: 1279
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260865,Failed
+Mobile data received today (SIM2),260865,184498,Failed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898827,Passed
+GPS longitude coordinate,23.964981079101562,23.964982,Failed
+GPS accuracy,0.8999999761581421,0.900000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 22
+Failed: 3
+
+Test: 1280
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260865,Failed
+Mobile data received today (SIM2),260865,184498,Failed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898826,Failed
+GPS longitude coordinate,23.964981079101562,23.964982,Failed
+GPS accuracy,0.8999999761581421,0.900000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 21
+Failed: 4
+
+Test: 1281
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260865,Failed
+Mobile data received today (SIM2),260865,184498,Failed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898826,Failed
+GPS longitude coordinate,23.964981079101562,23.964982,Failed
+GPS accuracy,0.8999999761581421,0.900000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 21
+Failed: 4
+
+Test: 1282
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260865,Failed
+Mobile data received today (SIM2),260865,184498,Failed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898826,Failed
+GPS longitude coordinate,23.964982986450195,23.964983,Passed
+GPS accuracy,0.8999999761581421,0.900000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 22
+Failed: 3
+
+Test: 1283
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260865,Failed
+Mobile data received today (SIM2),260865,184498,Failed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898827,Passed
+GPS longitude coordinate,23.964982986450195,23.964983,Passed
+GPS accuracy,0.8999999761581421,0.900000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  5s.
+Passed: 23
+Failed: 2
+
+Test: 1284
+Target,Modbus answer,SSH answer,Status
+System hostname,Teltonika-RUTX11.com,Teltonika-RUTX11.com,Passed
+LAN MAC address,001E423C0F3E,001E423C0F3E,Passed
+Router name,RUTX11,RUTX11,Passed
+Active SIM card,2,2,Passed
+Mobile data sent today (SIM2),184498,260865,Failed
+Mobile data received today (SIM2),260865,184498,Failed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+Mobile data received this week (SIM2),260865,260865,Passed
+Mobile data sent this week (SIM2),184498,184498,Passed
+Mobile data received this month (SIM2),260865,260865,Passed
+Mobile data sent this month (SIM2),184498,184498,Passed
+GPS satellite count,7,7,Passed
+GPS speed,0,0.000000,Passed
+GPS latitude coordinate,54.898826599121094,54.898828,Failed
+GPS longitude coordinate,23.964984893798828,23.964984,Failed
+GPS accuracy,0.8999999761581421,0.900000,Passed
+Mobile data sent today (SIM1),0,0,Passed
+Mobile data received today (SIM1),0,0,Passed
+Mobile data received this week (SIM1),0,0,Passed
+Mobile data sent this week (SIM1),0,0,Passed
+Mobile data received this month (SIM1),0,0,Passed
+Mobile data sent this month (SIM1),0,0,Passed
+Test duration:  8s.
+Passed: 21
+Failed: 4

@@ -29,7 +29,7 @@ def argumetsParser():
     parser.add_argument('-p','--port', help='Device port.')
     parser.add_argument('-u','--username', help='Username for ssh connection.')
     parser.add_argument('-ps','--password', help='Password for ssh connection.')
-    parser.add_argument('-mp','--modport', help='Modbus port.')
+    parser.add_argument('-mp','--modbus_port', help='Modbus port.')
     
     args = parser.parse_args()
     if(args.address == None):
@@ -46,12 +46,12 @@ def argumetsParser():
         print(f"Device port set to: {colors.PUR}{args.port}{colors.ENDC}")
         __port = args.port
 
-    if(args.modport == None):
+    if(args.modbus_port == None):
         print(f"{colors.FAIL}Enter modbus port !!!\r\n{colors.WARNING}Arguments format: -mp/--modport port{colors.ENDC}")
         return 0
     else:
-        print(f"Modbus port set to: {colors.PUR}{args.modport}{colors.ENDC}")
-        __modPort = args.port
+        print(f"Modbus port set to: {colors.PUR}{args.modbus_port}{colors.ENDC}")
+        __modPort = args.modbus_port
 
     if(args.username ==None):
         print(f"{colors.FAIL}Enter username !!!\r\n{colors.WARNING}Arguments format: -u/--username username{colors.ENDC}")
