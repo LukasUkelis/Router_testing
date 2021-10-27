@@ -19,6 +19,7 @@ class Testing:
   __testingCout = 0
   __running = True
   __connectionInfo = None
+  __higestRamUsage = 0
   __startTime = None
   __endOflast = 0
   __passed = 0
@@ -65,22 +66,14 @@ class Testing:
     total = int(self.__getSSHAnswer("ubus call system info | jsonfilter -e '@.memory.total'"))
     free = int(self.__getSSHAnswer("ubus call system info | jsonfilter -e '@.memory.free'"))
     using = int(total - free)
-    usage =round(using / total * 100,2)
-    if(usage > 65 and usage <= 80):
-      return f"{colors.WARNING}{usage} %{colors.ENDC}"
-    if(usage > 80):
-      return f"{colors.FAIL}{usage} %{colors.ENDC}"
-    return f"{colors.OKGREEN}{usage} %{colors.ENDC}"
-  
-  def __timeUpdate(self):
-    current = round(time.time() - self.__startTime)
-    mi = current/60
-    mi = str(mi).split('.')[0]
-    h = int(mi)/60
-    h = str(h).split('.')[0]
-    mi = int(mi)%60
-    sec = round(current%60)
-    return f" {h}h. {mi}min. {sec}s."
+    return round(using / total * 100,2)
+
+  def __ramUsageFormat(self, ramUsage):
+    if(ramUsage > 65 and ramUsage <= 80):
+      return f"{colors.WARNING}{ramUsage} %{colors.ENDC}"
+    if(ramUsage > 80):
+      return f"{colors.FAIL}{ramUsage} %{colors.ENDC}"
+    return f"{colors.OKGREEN}{ramUsage} %{colors.ENDC}"
 
   def __timeFormat(self, Time):
     mi = Time/60
@@ -158,8 +151,11 @@ class Testing:
       sshAnswer = self.__getSSHAnswer(sshCommand)
       status = self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat'])
       self.__writeToCsv({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
-      testInfo = {'currentTime':self.__timeFormat(time.time()-self.__startTime),'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__getRamUsage(),'testCount':self.__testingCout}
+      ramUsage = self.__getRamUsage()
+      testInfo = {'currentTime':self.__timeFormat(time.time()-self.__startTime),'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__ramUsageFormat(ramUsage),'testCount':self.__testingCout}
       self.__console.writeTestInfo(testInfo)
+      if(float(ramUsage)>float(self.__higestRamUsage)):
+        self.__higestRamUsage = ramUsage
       id += 1
 
 
@@ -190,6 +186,7 @@ class Testing:
       while True:
         passed = 0
         failed = 0
+        self.__higestRamUsage = 0
         self.__testingCout += 1
         if(self.__running == True):
           self.__csvWriter.writeNewHeader(self.__testingCout)
@@ -200,7 +197,7 @@ class Testing:
           self.__testModule(module)
           passed += self.__passed
           failed += self.__failed
-        self.__csvWriter.writeConclusions({'duration':self.__timeFormat(time.time()-self.__endOflast),'passed':passed,'failed':failed})
+        self.__csvWriter.writeConclusions({'duration':self.__timeFormat(time.time()-self.__endOflast),'passed':passed,'failed':failed,'ramUsage':f"{self.__higestRamUsage} %"})
         self.__endOflast = time.time()
       
 

@@ -117,5 +117,4 @@ class Connection:
     error  = f"{colors.FAIL}Can't get information from {colors.OKBLUE}{readInfo['registerAddress']}{colors.FAIL} register{colors.ENDC}"
     self.__console.writeErrorInfo(error)
     return False
-
-
+    

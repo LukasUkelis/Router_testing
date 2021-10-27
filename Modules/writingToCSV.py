@@ -33,6 +33,7 @@ class formatData:
     
   def writeConclusions(self, conclusionData):
       self.__writer.write(f"Test duration: {conclusionData['duration']}\r\n")
+      self.__writer.write(f"Highest ram usage: {conclusionData['ramUsage']}\r\n")
       self.__writer.write(f"Passed: {conclusionData['passed']}\r\n")
       self.__writer.write(f"Failed: {conclusionData['failed']}\r\n")
 
