@@ -134,7 +134,7 @@ class Testing:
       if(sshAnswer==modbusAnswer):
         self.__passed+=1
         return "Passed"
-    if(format == "ip"):
+    if(format == "IP"):
       if(sshAnswer==modbusAnswer):
         self.__passed+=1
         return "Passed"

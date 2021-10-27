@@ -13,6 +13,13 @@
           "sshCommand" : "ubus call system board | jsonfilter -e '@.hostname'" 
         },
         {
+          "target" : "Current WAN IP address",
+          "returnFormat" : "IP",
+          "registerAddress" : "139",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call system board | jsonfilter -e '@.hostname'" 
+        },
+        {
           "target" : "LAN MAC address",
           "returnFormat" : "string",
           "registerAddress" : "55",

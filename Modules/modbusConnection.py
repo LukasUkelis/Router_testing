@@ -77,8 +77,9 @@ class Connection:
         answer = answer + temp
     return answer
     
-  def formatip(self,values):
-    answer=""
+  def formatIP(self,values):
+    answer=" "
+    i = 0
     for value in values:
       temp = bin(value)
       temp = temp[2:len(temp)]
@@ -96,10 +97,13 @@ class Connection:
     methodName = f"format{formatType}"
     try:
       method = getattr(self,methodName)
-      return method(values)
+      
     except:
+      
       error  = f"{colors.FAIL}No instructions for how to format {colors.WARNING}{formatType}{colors.ENDC}"
       self.__console.writeErrorInfo(error)
+      return "  "
+    return method(values)
 
   def readReg(self,readInfo):
     try:
@@ -113,3 +117,5 @@ class Connection:
     error  = f"{colors.FAIL}Can't get information from {colors.OKBLUE}{readInfo['registerAddress']}{colors.FAIL} register{colors.ENDC}"
     self.__console.writeErrorInfo(error)
     return False
+
+
