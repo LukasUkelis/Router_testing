@@ -8,15 +8,19 @@ import Modules.writingToConsole as consoleWriting
 import time
 
 class Testing:
+  # modules
   __data = None
   __ssh = None
   __modbus = None
   __csvWriter = None
   __console = None
+
+  # variables
   __testingCout = 0
   __running = True
   __connectionInfo = None
   __startTime = None
+  __endOflast = 0
   __passed = 0
   __failed = 0
   
@@ -77,7 +81,21 @@ class Testing:
     mi = int(mi)%60
     sec = round(current%60)
     return f" {h}h. {mi}min. {sec}s."
-  
+
+  def __timeFormat(self, Time):
+    mi = Time/60
+    mi = str(mi).split('.')[0]
+    h = int(mi)/60  
+    h = str(h).split('.')[0]
+    mi = int(mi)%60
+    sec = round(Time%60)
+    if(int(h)>0 and int(mi)> 0):
+      return f" {h}h. {mi}min. {sec}s."
+    if(int(h) == 0 and int(mi)>0):
+      return f" {mi}min. {sec}s."
+    if(int(h)>0 and int(mi)== 0):
+      return f" {h}h. {sec}s."
+    return f" {sec}s."
 
 
 
@@ -116,6 +134,10 @@ class Testing:
       if(sshAnswer==modbusAnswer):
         self.__passed+=1
         return "Passed"
+    if(format == "ip"):
+      if(sshAnswer==modbusAnswer):
+        self.__passed+=1
+        return "Passed"
     self.__failed +=1
     return "Failed"
 
@@ -128,6 +150,7 @@ class Testing:
     data = self.__data.getModule(id)
     sep = moduleDataSepar.Separate(data)
     id = 0
+
     while id < sep.getTargetsCount():
       sshCommand = sep.getSshCommand(id)
       modbusCommand = sep.getModbusInstructions(id)
@@ -135,9 +158,10 @@ class Testing:
       sshAnswer = self.__getSSHAnswer(sshCommand)
       status = self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat'])
       self.__writeToCsv({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
-      testInfo = {'currentTime':self.__timeUpdate(),'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__getRamUsage(),'testCount':self.__testingCout}
+      testInfo = {'currentTime':self.__timeFormat(time.time()-self.__startTime),'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__getRamUsage(),'testCount':self.__testingCout}
       self.__console.writeTestInfo(testInfo)
       id += 1
+
 
   def __writeToCsv(self,data):
     self.__csvWriter.writeAnswer(data)
@@ -162,7 +186,10 @@ class Testing:
       self.__csvWriter.openNewWriter()
       self.__csvWriter.writeTitle()
       self.__startTime = time.time()
+      self.__endOflast = self.__startTime
       while True:
+        passed = 0
+        failed = 0
         self.__testingCout += 1
         if(self.__running == True):
           self.__csvWriter.writeNewHeader(self.__testingCout)
@@ -171,6 +198,10 @@ class Testing:
             self.__closeSshAndModbus()
             return True
           self.__testModule(module)
+          passed += self.__passed
+          failed += self.__failed
+        self.__csvWriter.writeConclusions({'duration':self.__timeFormat(time.time()-self.__endOflast),'passed':passed,'failed':failed})
+        self.__endOflast = time.time()
       
 
   def stopTesting(self):
