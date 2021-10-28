@@ -111,7 +111,7 @@ class Testing:
     if not sshAnswer or not modbusAnswer:
       self.__failed +=1
       return "Error"
-    if(format == "int"):
+    if(format == "int" or format == "signal"):
       try:
         sshAnswer = int(sshAnswer)
         modbusAnswer =int(modbusAnswer)
@@ -197,11 +197,11 @@ class Testing:
           self.__testModule(module)
           passed += self.__passed
           failed += self.__failed
-        self.__csvWriter.writeConclusions({'duration':self.__timeFormat(time.time()-self.__endOflast),'passed':passed,'failed':failed,'ramUsage':f"{self.__higestRamUsage} %"})
+        self.__csvWriter.writeConclusions({'duration':self.__timeFormat(time.time()-self.__endOflast),'passed':passed,'failed':failed,'ramUsage':f" {self.__higestRamUsage} %"})
         self.__endOflast = time.time()
       
 
   def stopTesting(self):
-    self.__console.writeErrorInfo(f"{colors.WARNING}After finishing testing current module program will exit{colors.ENDC}")
+    self.__console.writeErrorInfo(f"{colors.WARNING}After finishing testing current target program will exit{colors.ENDC}")
     self.__running = False
     

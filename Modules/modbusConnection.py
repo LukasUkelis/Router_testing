@@ -65,7 +65,7 @@ class Connection:
       carry = 0 if r <2 else 1
     if carry !=0:
         answer = '1'+answer
-    return answer
+    return f"-{int(answer,2)}"
 
   def formatstring(self,values):
     answer = ""

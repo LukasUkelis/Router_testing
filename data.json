@@ -14,6 +14,14 @@
           "extraComand" : "null" 
         },
         {
+          "target" : "System uptime",
+          "returnFormat" : "int",
+          "registerAddress" : "1",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call system info | jsonfilter -e '@.uptime'" ,
+          "extraComand" : "null" 
+        },
+        {
           "target" : "Current WAN IP address",
           "returnFormat" : "IP",
           "registerAddress" : "139",
@@ -183,6 +191,22 @@
       "moduleName":"mobile",
       "targets":
       [
+        {
+          "target" : "Mobile signal strength (RSSI in dBm)",
+          "returnFormat" : "signal",
+          "registerAddress" : "3",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call vuci.network.mobile mobile_status| jsonfilter -e '@.mobile[0].signal'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "GSM operator name",
+          "returnFormat" : "string",
+          "registerAddress" : "23",
+          "numberOfReg" : "16",
+          "sshCommand" : "ubus call vuci.network.mobile mobile_status| jsonfilter -e '@.mobile[0].state'" ,
+          "extraComand" : "null" 
+        },
         {
           "target" : "Mobile data sent today (SIM1)",
           "returnFormat" : "int",

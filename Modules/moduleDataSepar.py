@@ -1,5 +1,7 @@
 class Separate:
+  
   __moduleData = None
+
   def __init__(self, moduleData):
     self.__moduleData = moduleData
 
