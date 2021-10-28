@@ -2,8 +2,10 @@ import json
 import Modules.colors as colors
 
 class Data:
+  
   __data = None
   __dataPath  = 'data.json'
+
   def __init__(self):
       pass
   def openJson(self):

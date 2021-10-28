@@ -2,7 +2,7 @@ import Modules.colors as colors
 import time
 
 class writing:
-  __goback = "\033[F" * 15
+  __goback = "\033[F" * 16
   
   def __init__(self):
     pass
@@ -16,6 +16,7 @@ class writing:
                                                            
                                                            
                                                            
+                                                          
                                                            
                                                            
                                                            
@@ -25,6 +26,7 @@ class writing:
       """)
   
   def writeErrorInfo(self,errorInfo):
+    self.__clearconsole()
     time.sleep(0.5)
     print(f"""{self.__goback}     
                                                            
@@ -37,11 +39,12 @@ class writing:
                                                            
                                                   
                                                   
-                                                           
+                                                         
+
                                                               
                                                            
     """)
-    time.sleep(3)
+    time.sleep(2)
     self.__clearconsole()
   
   def __clearconsole(self):
@@ -57,7 +60,8 @@ class writing:
                                                                                                                     
                                                                                                                       
                                                                                                                       
-                                                                                                                      
+                                                                                                                       
+                                                                                                                       
                                                                                                                        
       """)
 
@@ -77,4 +81,5 @@ Failed: {colors.FAIL}{testInfo['failed']}{colors.ENDC}
 Test duration: {colors.OKBLUE}{testInfo['currentTime']}{colors.ENDC} 
 Test count: {colors.OKBLUE}{testInfo['testCount']}{colors.ENDC}  
 Memory usage: {testInfo['ramUsage']}  
+CPU usage: {testInfo['cpu']} 
 """)

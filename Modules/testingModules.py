@@ -20,6 +20,7 @@ class Testing:
   __running = True
   __connectionInfo = None
   __higestRamUsage = 0
+  __higestCpuUsage = 0
   __startTime = None
   __endOflast = 0
   __passed = 0
@@ -71,6 +72,9 @@ class Testing:
     using = int(total - free)
     return round(using / total * 100,2)
 
+  def __getCPUUsage(self):
+    return self.__getSSHAnswer("cpu_usage_script.sh")
+
 
   def __ramUsageFormat(self, ramUsage):
     if(ramUsage > 65 and ramUsage <= 80):
@@ -78,6 +82,13 @@ class Testing:
     if(ramUsage > 80):
       return f"{colors.FAIL}{ramUsage} %{colors.ENDC}"
     return f"{colors.OKGREEN}{ramUsage} %{colors.ENDC}"
+
+  def __cpuUsageFormat(self, cpuUsage):
+    if(cpuUsage > 65 and cpuUsage <= 80):
+      return f"{colors.WARNING}{cpuUsage} %{colors.ENDC}"
+    if(cpuUsage > 80):
+      return f"{colors.FAIL}{cpuUsage} %{colors.ENDC}"
+    return f"{colors.OKGREEN}{cpuUsage} %{colors.ENDC}"
 
 
   def __timeFormat(self, Time):
@@ -157,10 +168,14 @@ class Testing:
       status = self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat'])
       self.__csvWriter.writeAnswer({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
       ramUsage = self.__getRamUsage()
-      testInfo = {'currentTime':self.__timeFormat(time.time()-self.__startTime),'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__ramUsageFormat(ramUsage),'testCount':self.__testingCout}
+      cpuUsage = self.__getCPUUsage()
+      testInfo = {'cpu':self.__cpuUsageFormat(float(cpuUsage)),'currentTime':self.__timeFormat(time.time()-self.__startTime),'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__ramUsageFormat(ramUsage),'testCount':self.__testingCout}
       self.__console.writeTestInfo(testInfo)
+
       if(float(ramUsage)>float(self.__higestRamUsage)):
         self.__higestRamUsage = ramUsage
+      if(float(cpuUsage)>float(self.__higestCpuUsage)):
+        self.__higestCpuUsage = cpuUsage
       id += 1
 
 
@@ -197,7 +212,7 @@ class Testing:
           self.__testModule(module)
           passed += self.__passed
           failed += self.__failed
-        self.__csvWriter.writeConclusions({'duration':self.__timeFormat(time.time()-self.__endOflast),'passed':passed,'failed':failed,'ramUsage':f" {self.__higestRamUsage} %"})
+        self.__csvWriter.writeConclusions({'cpu':self.__higestCpuUsage,'duration':self.__timeFormat(time.time()-self.__endOflast),'passed':passed,'failed':failed,'ramUsage':self.__higestRamUsage})
         self.__endOflast = time.time()
       
 
