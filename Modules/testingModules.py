@@ -108,12 +108,11 @@ class Testing:
 
 
   def __getRouterModules(self):
-    listToCheck = self.__data.getModulesNames()
     modulesList = []
-    for element in listToCheck:
-      answer = self.__getSSHAnswer(f"uci get hwinfo.@hwinfo[0].{element}")
-      if(answer == "1"):
-        modulesList.append(element)
+    for element in self.__data.getModulesNames():
+      for module in self.__ssh.getModules():
+        if(element == module):
+          modulesList.append(element)
     print(f"Testing modules: {colors.OKBLUE}{modulesList}{colors.ENDC}")
     return modulesList
 
@@ -217,6 +216,6 @@ class Testing:
       
 
   def stopTesting(self):
-    self.__console.writeErrorInfo(f"{colors.WARNING}After finishing testing current target program will exit{colors.ENDC}")
+    self.__console.writeErrorInfo(f"{colors.WARNING}After finishing testing current target program will stop{colors.ENDC}")
     self.__running = False
     

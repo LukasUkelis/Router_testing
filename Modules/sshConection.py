@@ -2,6 +2,7 @@ import paramiko
 import time
 import Modules.writingToConsole as consoleWriting
 import Modules.colors as colors
+
 class Connection:
   __ssh = None
   __connectionInfo = None
@@ -46,6 +47,24 @@ class Connection:
       self.__console.writeErrorInfo(error)
       return False
     return self.__parsingLines(lines)
+  
+  def getModules(self):
+    try:
+      command = "uci show /etc/config/hwinfo"
+      stdin, stdout, stderr = self.__ssh.exec_command(command)
+      lines = stdout.readlines()
+    except:
+      return False
+    modules = []
+    for line in lines:
+      line = line.strip("\n")
+      l = len(line)
+      check = line[l-2:l-1]
+      if(check == "1"):
+        modules.append(line[14:l-4])
+    return modules
+
+
     
   def closeConnection(self):
     time.sleep(0.5)

@@ -1,4 +1,5 @@
 import Modules.colors as colors
+# import colors
 import time
 
 class writing:

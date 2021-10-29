@@ -26,7 +26,7 @@
           "returnFormat" : "IP",
           "registerAddress" : "139",
           "numberOfReg" : "2",
-          "sshCommand" : "ubus call system board | jsonfilter -e '@.hostname'" ,
+          "sshCommand" : "wan_info ip" ,
           "extraComand" : "null" 
         },
         {
@@ -64,7 +64,7 @@
           "returnFormat" : "int",
           "registerAddress" : "300",
           "numberOfReg" : "2",
-          "sshCommand" : "ubus  call mdcollect get '{\"period\":\"day\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}' | jsonfilter -e '@.rx'" ,
+          "sshCommand" : "ubus  call mdcollect get '{\"period\":\"day\",\"sim\":2,\"mode m\":\"3-1\",\"current\":true}' | jsonfilter -e '@.rx'" ,
           "extraComand" : "null" 
         },
         {
@@ -72,7 +72,7 @@
           "returnFormat" : "int",
           "registerAddress" : "302",
           "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" ,
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":2,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.tx'" ,
           "extraComand" : "null" 
         },
         {
@@ -80,7 +80,7 @@
           "returnFormat" : "int",
           "registerAddress" : "304",
           "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" ,
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":2,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.rx'" ,
           "extraComand" : "null" 
         },
         {
@@ -88,7 +88,7 @@
           "returnFormat" : "int",
           "registerAddress" : "306",
           "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" ,
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":2,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.tx'" ,
           "extraComand" : "null" 
         },
         {
@@ -96,7 +96,7 @@
           "returnFormat" : "int",
           "registerAddress" : "308",
           "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" ,
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":2,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.rx'" ,
           "extraComand" : "null" 
         },
         {
@@ -104,11 +104,27 @@
           "returnFormat" : "int",
           "registerAddress" : "310",
           "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" ,
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":2,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.tx'" ,
           "extraComand" : "null" 
         },
         {
-          "target" : "Mobile data received this week (SIM2)",
+          "target" : "Mobile data received last 24h (SIM2)",
+          "returnFormat" : "int",
+          "registerAddress" : "312",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data sent last 24h (SIM2)",
+          "returnFormat" : "int",
+          "registerAddress" : "314",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data received last week (SIM2)",
           "returnFormat" : "int",
           "registerAddress" : "316",
           "numberOfReg" : "2",
@@ -116,7 +132,7 @@
           "extraComand" : "null" 
         },
         {
-          "target" : "Mobile data sent this week (SIM2)",
+          "target" : "Mobile data sent last week (SIM2)",
           "returnFormat" : "int",
           "registerAddress" : "318",
           "numberOfReg" : "2",
@@ -124,7 +140,7 @@
           "extraComand" : "null" 
         },
         {
-          "target" : "Mobile data received this month (SIM2)",
+          "target" : "Mobile data received last month(SIM2)",
           "returnFormat" : "int",
           "registerAddress" : "320",
           "numberOfReg" : "2",
@@ -132,11 +148,117 @@
           "extraComand" : "null" 
         },
         {
-          "target" : "Mobile data sent this month (SIM2)",
+          "target" : "Mobile data sent last month (SIM2)",
           "returnFormat" : "int",
           "registerAddress" : "322",
           "numberOfReg" : "2",
           "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":2,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" ,
+          "extraComand" : "null" 
+        }
+
+        ,
+        {
+          "target" : "Mobile data sent today (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "187",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus  call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":true}' | jsonfilter -e '@.tx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data received today (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "185",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.rx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data received today (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "185",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.rx'" ,
+          "extraComand" : "echo labas" 
+        },
+        {
+          "target" : "Mobile data received this week (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "189",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":1,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.rx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data sent this week (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "191",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":1,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.tx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data received this month (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "193",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":1,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.rx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data sent this month (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "195",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":1,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.tx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data received last 24h (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "197",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data sent last 24h (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "199",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data received last week (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "292",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data sent last week (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "294",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data received last month (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "296",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Mobile data sent last month (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "298",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" ,
           "extraComand" : "null" 
         }
       ]
@@ -197,70 +319,6 @@
           "registerAddress" : "3",
           "numberOfReg" : "2",
           "sshCommand" : "ubus call vuci.network.mobile mobile_status| jsonfilter -e '@.mobile[0].signal'" ,
-          "extraComand" : "null" 
-        },
-        {
-          "target" : "GSM operator name",
-          "returnFormat" : "string",
-          "registerAddress" : "23",
-          "numberOfReg" : "16",
-          "sshCommand" : "ubus call vuci.network.mobile mobile_status| jsonfilter -e '@.mobile[0].state'" ,
-          "extraComand" : "null" 
-        },
-        {
-          "target" : "Mobile data sent today (SIM1)",
-          "returnFormat" : "int",
-          "registerAddress" : "187",
-          "numberOfReg" : "2",
-          "sshCommand" : "ubus  call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}' | jsonfilter -e '@.tx'" ,
-          "extraComand" : "null" 
-        },
-        {
-          "target" : "Mobile data received today (SIM1)",
-          "returnFormat" : "int",
-          "registerAddress" : "185",
-          "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" ,
-          "extraComand" : "null" 
-        },
-        {
-          "target" : "Mobile data received today (SIM1)",
-          "returnFormat" : "int",
-          "registerAddress" : "185",
-          "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"day\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" ,
-          "extraComand" : "echo labas" 
-        },
-        {
-          "target" : "Mobile data received this week (SIM1)",
-          "returnFormat" : "int",
-          "registerAddress" : "189",
-          "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" ,
-          "extraComand" : "null" 
-        },
-        {
-          "target" : "Mobile data sent this week (SIM1)",
-          "returnFormat" : "int",
-          "registerAddress" : "191",
-          "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" ,
-          "extraComand" : "null" 
-        },
-        {
-          "target" : "Mobile data received this month (SIM1)",
-          "returnFormat" : "int",
-          "registerAddress" : "193",
-          "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.rx'" ,
-          "extraComand" : "null" 
-        },
-        {
-          "target" : "Mobile data sent this month (SIM1)",
-          "returnFormat" : "int",
-          "registerAddress" : "195",
-          "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"month\",\"sim\":1,\"mode m\":\"3-1\",\"current\":false}'| jsonfilter -e '@.tx'" ,
           "extraComand" : "null" 
         }
       ]
