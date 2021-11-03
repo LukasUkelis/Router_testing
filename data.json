@@ -1,8 +1,12 @@
 {
+"devices":
+[
+{
+  "device":"RUTX",
   "modules":
   [
     {
-      "moduleName":"ios",
+      "moduleName":"system",
       "targets":
       [
         {
@@ -88,8 +92,9 @@
           "returnFormat" : "int",
           "registerAddress" : "306",
           "numberOfReg" : "2",
-          "sshCommand" : "ubus call mdcollect get '{\"period\":\"week\",\"sim\":2,\"mode m\":\"3-1\",\"current\":true}'| jsonfilter -e '@.tx'" ,
-          "extraComand" : "null" 
+          "module" : "mobile" ,
+          "action" : "sentData",
+          "args" : "week"
         },
         {
           "target" : "Mobile data received this month (SIM2)",
@@ -324,4 +329,94 @@
       ]
     }
   ]
+},
+{
+  "device":"RUT9",
+  "modules":
+  [
+    {
+      "moduleName":"system",
+      "targets":
+      [
+        {
+          "target" : "System hostname",
+          "returnFormat" : "string",
+          "registerAddress" : "7",
+          "numberOfReg" : "16",
+          "sshCommand" : "ubus call system board | jsonfilter -e '@.hostname'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "System uptime",
+          "returnFormat" : "int",
+          "registerAddress" : "1",
+          "numberOfReg" : "2",
+          "sshCommand" : "ubus call system info | jsonfilter -e '@.uptime'" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Current WAN IP address",
+          "returnFormat" : "IP",
+          "registerAddress" : "139",
+          "numberOfReg" : "2",
+          "sshCommand" : "wan_info ip" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "LAN MAC address",
+          "returnFormat" : "string",
+          "registerAddress" : "55",
+          "numberOfReg" : "16",
+          "sshCommand" : "mnf_info mac" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Router name",
+          "returnFormat" : "string",
+          "registerAddress" : "71",
+          "numberOfReg" : "16",
+          "sshCommand" : "uci get system.@system[0].routername" ,
+          "extraComand" : "null" 
+        }
+      ]
+    },
+    {
+      "moduleName":"mobile",
+      "targets":
+      [
+        {
+          "target" : "Mobile signal strength (RSSI in dBm)",
+          "returnFormat" : "signal",
+          "registerAddress" : "3",
+          "numberOfReg" : "2",
+          "sshCommand" : "gsmctl -q" ,
+          "extraComand" : "null" 
+        }
+      ]
+    },
+    {
+      "moduleName":"dual_sim",
+      "targets":
+      [
+        {
+          "target" : "Mobile signal strength (RSSI in dBm)",
+          "returnFormat" : "signal",
+          "registerAddress" : "3",
+          "numberOfReg" : "2",
+          "sshCommand" : "gsmctl -q" ,
+          "extraComand" : "null" 
+        },
+        {
+          "target" : "Active SIM card",
+          "returnFormat" : "int",
+          "registerAddress" : "205",
+          "numberOfReg" : "1",
+          "sshCommand" : "ubus call sim get | jsonfilter -e '@.sim'",
+          "extraComand" : "null" 
+        }
+      ]
+    }
+  ]
+}
+]
 }

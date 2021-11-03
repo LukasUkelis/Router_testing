@@ -1,0 +1,251 @@
+{
+  "devices":
+  [
+    {
+      "device":"RUTX",
+      "modules":
+      [
+        {
+          "target" : "GPS latitude coordinate",
+          "returnFormat" : "float",
+          "registerAddress" : "143",
+          "numberOfReg" : "2",
+          "module" : "gps" ,
+          "action" : "position",
+          "args" : "latitude"
+        },
+        {
+          "target" : "GPS longitude coordinate",
+          "returnFormat" : "float",
+          "registerAddress" : "145",
+          "numberOfReg" : "2",
+          "module" : "gps" ,
+          "action" : "position",
+          "args" : "longitude"
+        },
+        {
+          "target" : "GPS accuracy",
+          "returnFormat" : "float",
+          "registerAddress" : "183",
+          "numberOfReg" : "2",
+          "module" : "gps" ,
+          "action" : "position",
+          "args" : "accuracy"
+        },
+        {
+          "target" : "GPS speed",
+          "returnFormat" : "int",
+          "registerAddress" : "179",
+          "numberOfReg" : "2",
+          "module" : "gps" ,
+          "action" : "position",
+          "args" : "speed"
+        },
+        {
+          "target" : "GPS satellite count",
+          "returnFormat" : "int",
+          "registerAddress" : "181",
+          "numberOfReg" : "2",
+          "module" : "gps" ,
+          "action" : "position",
+          "args" : "satellites"
+        },
+        {
+          "target" : "Mobile signal strength (RSSI in dBm)",
+          "returnFormat" : "signal",
+          "registerAddress" : "3",
+          "numberOfReg" : "2",
+          "module" : "mobile" ,
+          "action" : "signal",
+          "args" : "null"
+        },
+        {
+          "target" : "Mobile data sent this week (SIM2)",
+          "returnFormat" : "int",
+          "registerAddress" : "306",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "sentData",
+          "args" :
+          {
+            "sim":"2",
+            "period":"week",
+            "current":"True"
+          }
+        },
+        {
+          "target" : "Mobile data received this week (SIM2)",
+          "returnFormat" : "int",
+          "registerAddress" : "304",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "receivedData",
+          "args" :
+          {
+            "sim":"2",
+            "period":"week",
+            "current":"True"
+          }
+        },
+        {
+          "target" : "LAN MAC address",
+          "returnFormat" : "string",
+          "registerAddress" : "55",
+          "numberOfReg" : "16",
+          "module" : "system" ,
+          "action" : "mnfinfo",
+          "args" : "mac"
+        },
+        {
+          "target" : "Active SIM card",
+          "returnFormat" : "int",
+          "registerAddress" : "205",
+          "numberOfReg" : "1",
+          "module" : "dual_sim" ,
+          "action" : "simGet",
+          "args" : "null"
+        },
+        {
+          "target" : "Mobile data sent today (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "187",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "sentData",
+          "args" :
+          {
+            "sim":"1",
+            "period":"day",
+            "current":"True"
+          }
+        },
+        {
+          "target" : "Mobile data received today (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "185",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "receivedData",
+          "args" :
+          {
+            "sim":"1",
+            "period":"day",
+            "current":"True"
+          }
+        },
+        {
+          "target" : "Mobile data received this week (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "189",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "receivedData",
+          "args" :
+          {
+            "sim":"1",
+            "period":"week",
+            "current":"True"
+          }
+        },
+        {
+          "target" : "Mobile data sent this week (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "191",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "sentData",
+          "args" :
+          {
+            "sim":"1",
+            "period":"week",
+            "current":"True"
+          }
+        },
+        {
+          "target" : "Mobile data received this month (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "193",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "receivedData",
+          "args" :
+          {
+            "sim":"1",
+            "period":"month",
+            "current":"True"
+          }
+        },
+        {
+          "target" : "Mobile data sent this month (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "195",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "sentData",
+          "args" :
+          {
+            "sim":"1",
+            "period":"month",
+            "current":"True"
+          }
+        },
+        {
+          "target" : "Mobile data received last 24h (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "197",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "receivedData",
+          "args" :
+          {
+            "sim":"1",
+            "period":"day",
+            "current":"False"
+          }
+        },
+        {
+          "target" : "Mobile data sent last 24h (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "199",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "sentData",
+          "args" :
+          {
+            "sim":"1",
+            "period":"day",
+            "current":"False"
+          }
+        },
+        {
+          "target" : "Mobile data sent last week (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "294",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "sentData",
+          "args" :
+          {
+            "sim":"1",
+            "period":"week",
+            "current":"False"
+          }
+        },
+        {
+          "target" : "Mobile data received last week (SIM1)",
+          "returnFormat" : "int",
+          "registerAddress" : "292",
+          "numberOfReg" : "2",
+          "module" : "dual_sim" ,
+          "action" : "receivedData",
+          "args" :
+          {
+            "sim":"1",
+            "period":"week",
+            "current":"False"
+          }
+        }
+      ]
+    }
+  ]
+}

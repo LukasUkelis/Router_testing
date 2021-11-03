@@ -1,10 +1,9 @@
 import Modules.dataParser as dataParser 
-import Modules.sshConection as sshConection
-import Modules.moduleDataSepar as moduleDataSepar
 import Modules.modbusConnection as modbusConnection
 import Modules.writingToCSV as CSV
 import Modules.colors as colors
 import Modules.writingToConsole as consoleWriting
+import Modules.sshCommandExecution as SSHCommands
 import time
 
 class Testing:
@@ -16,6 +15,7 @@ class Testing:
   __console = None
 
   # variables
+  __mobulesData = None
   __testingCout = 0
   __running = True
   __connectionInfo = None
@@ -31,17 +31,19 @@ class Testing:
     pass
 
 
-  def __getModulesTestData(self):
+  def __getModulesTestData(self,deviceName):
     self.__data = dataParser.Data()
-    if not self.__data.openJson():
+    if not self.__data.openJson(deviceName):
       return False
+    self.__mobulesData = self.__data.getModules(self.__getRouterModules())
     return True
     
     
   def __connectToSshAndModbus(self):
-    self.__ssh = sshConection.Connection(self.__connectionInfo)
+    self.__ssh = SSHCommands.execution(self.__connectionInfo)
+    # self.__ssh = sshConection.Connection(self.__connectionInfo)
     self.__modbus = modbusConnection.Connection(self.__connectionInfo)
-    if not self.__ssh.connect() or not self.__modbus.connect():
+    if not self.__ssh or not self.__modbus.connect():
       return False
     return True
 
@@ -50,12 +52,6 @@ class Testing:
     self.__modbus.closeConnection()
     self.__ssh.closeConnection()
 
-
-  def __getSSHAnswer(self,command):
-    answer = self.__ssh.executeCommand(command)
-    if not answer:
-      return False
-    return answer
 
 
   def __getModbusAnswer(self,command):
@@ -67,13 +63,13 @@ class Testing:
   
 
   def __getRamUsage(self):
-    total = int(self.__getSSHAnswer("ubus call system info | jsonfilter -e '@.memory.total'"))
-    free = int(self.__getSSHAnswer("ubus call system info | jsonfilter -e '@.memory.free'"))
+    total = int(self.__ssh.executeCommand("ubus call system info | jsonfilter -e '@.memory.total'"))
+    free = int(self.__ssh.executeCommand("ubus call system info | jsonfilter -e '@.memory.free'"))
     using = int(total - free)
     return round(using / total * 100,2)
 
   def __getCPUUsage(self):
-    return self.__getSSHAnswer("cpu_usage_script.sh")
+    return self.__ssh.executeCommand("cpu_usage_script.sh")
 
 
   def __ramUsageFormat(self, ramUsage):
@@ -108,12 +104,9 @@ class Testing:
 
 
   def __getRouterModules(self):
-    modulesList = []
-    for element in self.__data.getModulesNames():
-      for module in self.__ssh.getModules():
-        if(element == module):
-          modulesList.append(element)
-    print(f"Testing modules: {colors.OKBLUE}{modulesList}{colors.ENDC}")
+    modulesList = ['system']
+    for module in self.__ssh.getModules():
+      modulesList.append(module)
     return modulesList
 
 
@@ -131,10 +124,11 @@ class Testing:
       if(sshAnswer==modbusAnswer):
         self.__passed+=1
         return "Passed"
+
     if(format == "float"):
       lowerLen  = min(len(str(sshAnswer).split('.')[1]),len(str(modbusAnswer).split('.')[1]))
-      sshAnswer = round(float(sshAnswer),lowerLen)
-      modbusAnswer = round(float(modbusAnswer),lowerLen)
+      sshAnswer = round(float(sshAnswer),lowerLen-1)
+      modbusAnswer = round(float(modbusAnswer),lowerLen-1)
       if(sshAnswer==modbusAnswer):
         self.__passed+=1
         return "Passed"
@@ -146,51 +140,47 @@ class Testing:
     return "Failed"
 
 
-  def __testModule(self,moduleName):
+  def __testModule(self):
+
     self.__passed = 0
     self.__failed = 0
-    id = self.__data.getModuleID(moduleName)
-    if (id == -1):
-      return False
-    data = self.__data.getModule(id)
-    sep = moduleDataSepar.Separate(data)
-    id = 0
-    while id < sep.getTargetsCount():
-      if not sep.getExtraComand(id):
-        pass
-      else:
-        self.__getSSHAnswer(sep.getExtraComand(id))
-      sshCommand = sep.getSshCommand(id)
-      modbusCommand = sep.getModbusInstructions(id)
-      modAnswer = self.__getModbusAnswer(modbusCommand)
-      sshAnswer = self.__getSSHAnswer(sshCommand)
-      status = self.__compareAnswers(sshAnswer,modAnswer,modbusCommand['returnFormat'])
-      self.__csvWriter.writeAnswer({'target':sep.getTarget(id),'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
+    
+    for target in self.__mobulesData:
+      sshAnswer =""
+      if(self.__running == False):
+        break
+      modAnswer = self.__getModbusAnswer({'registerAddress':target['registerAddress'],'numberOfReg':target['numberOfReg'],'returnFormat':target['returnFormat']})
+     
+      method = getattr(self.__ssh,target['action'])
+      sshAnswer = method(target['args'])
+      
+      status = self.__compareAnswers(sshAnswer,modAnswer,target['returnFormat'])
+      self.__csvWriter.writeAnswer({'target':target['target'],'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
       ramUsage = self.__getRamUsage()
       cpuUsage = self.__getCPUUsage()
-      testInfo = {'cpu':self.__cpuUsageFormat(float(cpuUsage)),'currentTime':self.__timeFormat(time.time()-self.__startTime),'moduleName':moduleName,'targetCout':sep.getTargetsCount(),'target':sep.getTarget(id),'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__ramUsageFormat(ramUsage),'testCount':self.__testingCout}
+      testInfo = {'cpu':self.__cpuUsageFormat(float(cpuUsage)),'currentTime':self.__timeFormat(time.time()-self.__startTime),'moduleName':target['module'],'target':target['target'],'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__ramUsageFormat(ramUsage),'testCount':self.__testingCout}
       self.__console.writeTestInfo(testInfo)
 
       if(float(ramUsage)>float(self.__higestRamUsage)):
         self.__higestRamUsage = ramUsage
       if(float(cpuUsage)>float(self.__higestCpuUsage)):
         self.__higestCpuUsage = cpuUsage
-      id += 1
 
 
   def startTesting(self,connectionInfo):
     self.__connectionInfo = connectionInfo
-    if not self.__getModulesTestData():
-      return False
     if not self.__connectToSshAndModbus():
       return False
+    deviceName = self.__ssh.executeCommand("uci get system.@system[0].routername")
+    if not self.__getModulesTestData(deviceName):
+      return False
+    
     modulesList = self.__getRouterModules()
     if(len(modulesList)==0):
       print(f"{colors.FAIL}No modules to check{colors.ENDC}")
     else:
       self.__console  = consoleWriting.writing()
       self.__console.startWriting()
-      deviceName = self.__getSSHAnswer("uci get system.@system[0].routername")
       deviceInfo = {'address':self.__connectionInfo['address'],'port':self.__connectionInfo['port'],'modPort':self.__connectionInfo['modPort'],'deviceName':deviceName,'modules':modulesList}
       self.__csvWriter = CSV.formatData(deviceInfo)
       self.__csvWriter.openNewWriter()
@@ -204,18 +194,17 @@ class Testing:
         self.__testingCout += 1
         if(self.__running == True):
           self.__csvWriter.writeNewHeader(self.__testingCout)
-        for module in modulesList:
-          if(self.__running == False):
-            self.__closeSshAndModbus()
-            return True
-          self.__testModule(module)
-          passed += self.__passed
-          failed += self.__failed
+        if(self.__running == False):
+          self.__closeSshAndModbus()
+          return True
+        self.__testModule()
+        passed += self.__passed
+        failed += self.__failed
         self.__csvWriter.writeConclusions({'cpu':self.__higestCpuUsage,'duration':self.__timeFormat(time.time()-self.__endOflast),'passed':passed,'failed':failed,'ramUsage':self.__higestRamUsage})
         self.__endOflast = time.time()
       
 
   def stopTesting(self):
-    self.__console.writeErrorInfo(f"{colors.WARNING}After finishing testing current target program will stop{colors.ENDC}")
+    self.__console.writeErrorInfo(f"{colors.FAIL}TEST STOPED{colors.ENDC}")
     self.__running = False
     

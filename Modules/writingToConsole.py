@@ -3,7 +3,7 @@ import Modules.colors as colors
 import time
 
 class writing:
-  __goback = "\033[F" * 16
+  __goback = "\033[F" * 15
   
   def __init__(self):
     pass
@@ -18,7 +18,6 @@ class writing:
                                                            
                                                            
                                                           
-                                                           
                                                            
                                                            
                                                            
@@ -40,8 +39,6 @@ class writing:
                                                            
                                                   
                                                   
-                                                         
-
                                                               
                                                            
     """)
@@ -60,7 +57,6 @@ class writing:
                                                                                                                       
                                                                                                                     
                                                                                                                       
-                                                                                                                      
                                                                                                                        
                                                                                                                        
                                                                                                                        
@@ -70,7 +66,6 @@ class writing:
 
     print(f"""{self.__goback}     
 {colors.OKBLUE}{testInfo['moduleName']}{colors.ENDC} module             
-Testing {colors.OKBLUE}{testInfo['targetCout']}{colors.ENDC} targets.
                 
 Testing target:  {colors.OKBLUE}{testInfo['target']}{colors.ENDC}                                  
 Modbus answer: {colors.OKBLUE}{testInfo['modAnswer']}{colors.ENDC}                               

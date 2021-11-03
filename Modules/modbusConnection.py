@@ -3,7 +3,7 @@ import Modules.writingToConsole as consoleWriting
 import Modules.colors as colors
 import codecs
 import struct
-
+import time
 class Connection:
   __connectionInfo = None
   __client = None
