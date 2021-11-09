@@ -111,33 +111,35 @@ class Testing:
 
 
   def __compareAnswers(self,sshAnswer,modbusAnswer,format):
-    if not sshAnswer or not modbusAnswer:
+    try:
+      if not sshAnswer or not modbusAnswer:
+        self.__failed +=1
+        return "Error"
+      if(format == "int" or format == "decimal"):
+        try:
+          sshAnswer = int(sshAnswer)
+          modbusAnswer =int(modbusAnswer)
+        except:
+          sshAnswer = float(sshAnswer)
+          modbusAnswer = float(modbusAnswer)
+        if(sshAnswer==modbusAnswer):
+          self.__passed+=1
+          return "Passed"
+      if(format == "float"):
+        lowerLen  = min(len(str(sshAnswer).split('.')[1]),len(str(modbusAnswer).split('.')[1]))
+        sshAnswer = round(float(sshAnswer),lowerLen-1)
+        modbusAnswer = round(float(modbusAnswer),lowerLen-1)
+        if(sshAnswer==modbusAnswer):
+          self.__passed+=1
+          return "Passed"
+      if(format == "string" or format == "IP"):
+        if(sshAnswer==modbusAnswer):
+          self.__passed+=1
+          return "Passed"
       self.__failed +=1
+      return "Failed"
+    except:
       return "Error"
-    if(format == "int" or format == "decimal"):
-      try:
-        sshAnswer = int(sshAnswer)
-        modbusAnswer =int(modbusAnswer)
-      except:
-        sshAnswer = float(sshAnswer)
-        modbusAnswer = float(modbusAnswer)
-      if(sshAnswer==modbusAnswer):
-        self.__passed+=1
-        return "Passed"
-
-    if(format == "float"):
-      lowerLen  = min(len(str(sshAnswer).split('.')[1]),len(str(modbusAnswer).split('.')[1]))
-      sshAnswer = round(float(sshAnswer),lowerLen-1)
-      modbusAnswer = round(float(modbusAnswer),lowerLen-1)
-      if(sshAnswer==modbusAnswer):
-        self.__passed+=1
-        return "Passed"
-    if(format == "string" or format == "IP"):
-      if(sshAnswer==modbusAnswer):
-        self.__passed+=1
-        return "Passed"
-    self.__failed +=1
-    return "Failed"
 
 
   def __testModule(self):
