@@ -6,6 +6,42 @@
       "modules":
       [
         {
+          "target" : "System uptime",
+          "returnFormat" : "int",
+          "registerAddress" : "1",
+          "numberOfReg" : "2",
+          "module" : "system" ,
+          "action" : "device_Info",
+          "args" : 
+          {
+            "get" : "uptime"
+          }
+        },
+        {
+          "target" : "System hostname",
+          "returnFormat" : "string",
+          "registerAddress" : "7",
+          "numberOfReg" : "16",
+          "module" : "system" ,
+          "action" : "device_Info",
+          "args" : 
+          {
+            "get" : "hostname"
+          }
+        },
+        {
+          "target" : "Router name",
+          "returnFormat" : "string",
+          "registerAddress" : "71",
+          "numberOfReg" : "16",
+          "module" : "system" ,
+          "action" : "device_Info",
+          "args" : 
+          {
+            "get" : "name"
+          }
+        },
+        {
           "target" : "GPS latitude coordinate",
           "returnFormat" : "float",
           "registerAddress" : "143",

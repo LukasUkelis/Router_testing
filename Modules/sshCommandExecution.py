@@ -25,8 +25,12 @@ class execution:
   def device_Info(self,args):
     if(args['get'] == "mac"):
       return self.__ssh.executeCommand('mnf_info -m')
+    if(args['get'] == "hostname"):
+      return self.__ssh.executeCommand("ubus call system board | jsonfilter -e '@.hostname'")
     if(args['get'] == "name"):
-      return self.__ssh.executeCommand('mnf_info -n')
+      return self.__ssh.executeCommand("uci get system.@system[0].routername")
+    if(args['get'] == "uptime"):
+      return self.__ssh.executeCommand("ubus call system info | jsonfilter -e '@.uptime'")
 
 
   def executeCommand(self,command):

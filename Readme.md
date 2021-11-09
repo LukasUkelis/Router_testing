@@ -44,7 +44,9 @@ Press crtl + c to stop the program.
 + device_info
     + get
         + mac -> LAN MAC address
-        + 
+        + name -> Router name
+        + hostname -> Router hostname
+        + uptime -> Router uptime
 + sentData
     + sim 
         + 1 -> get sent data from sim 1
