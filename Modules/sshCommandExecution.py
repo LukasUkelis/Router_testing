@@ -22,11 +22,12 @@ class execution:
     b = "}"
     return self.__ssh.executeCommand(f"ubus  call mdcollect get '{a}\"period\":\"{args['period']}\",\"sim\":{args['sim']},\"mode m\":\"3-1\",\"current\":{args['current']}{b}' | jsonfilter -e '@.tx'")
   
-  def simGet(self,args):
-    return self.__ssh.executeCommand("ubus call sim get | jsonfilter -e '@.sim'")
-  
-  def mnfinfo(self,args):
-    return self.__ssh.executeCommand('ubus call mnfinfo get | jsonfilter -e \'@.mnfinfo.{s}\''.format(s = args))
+  def device_Info(self,args):
+    if(args['get'] == "mac"):
+      return self.__ssh.executeCommand('mnf_info -m')
+    if(args['get'] == "name"):
+      return self.__ssh.executeCommand('mnf_info -n')
+
 
   def executeCommand(self,command):
     return self.__ssh.executeCommand(command)
@@ -34,8 +35,11 @@ class execution:
   def getModules(self):
     return self.__ssh.getModules()
 
-  def position(self,args):
-    return self.__ssh.executeCommand(f"ubus call gpsd position | jsonfilter -e '@.{args}'")
+  def GPS_info(self,args):
+    return self.__ssh.executeCommand(f"ubus call gpsd position | jsonfilter -e '@.{args['get']}'")
   
-  def signal(self,args):
-    return self.__ssh.executeCommand("gsmctl -q")
+  def mobile_Info(self,args):
+    if(args['get'] == "signal"):
+      return self.__ssh.executeCommand("gsmctl -q")
+    if(args['get'] == "activeSim"):
+      return self.__ssh.executeCommand("ubus call sim get | jsonfilter -e '@.sim'")

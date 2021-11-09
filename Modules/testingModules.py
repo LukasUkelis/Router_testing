@@ -7,6 +7,7 @@ import Modules.sshCommandExecution as SSHCommands
 import time
 
 class Testing:
+  
   # modules
   __data = None
   __ssh = None
@@ -41,7 +42,6 @@ class Testing:
     
   def __connectToSshAndModbus(self):
     self.__ssh = SSHCommands.execution(self.__connectionInfo)
-    # self.__ssh = sshConection.Connection(self.__connectionInfo)
     self.__modbus = modbusConnection.Connection(self.__connectionInfo)
     if not self.__ssh or not self.__modbus.connect():
       return False
@@ -114,7 +114,7 @@ class Testing:
     if not sshAnswer or not modbusAnswer:
       self.__failed +=1
       return "Error"
-    if(format == "int" or format == "signal"):
+    if(format == "int" or format == "decimal"):
       try:
         sshAnswer = int(sshAnswer)
         modbusAnswer =int(modbusAnswer)
@@ -150,17 +150,18 @@ class Testing:
       if(self.__running == False):
         break
       modAnswer = self.__getModbusAnswer({'registerAddress':target['registerAddress'],'numberOfReg':target['numberOfReg'],'returnFormat':target['returnFormat']})
-     
-      method = getattr(self.__ssh,target['action'])
-      sshAnswer = method(target['args'])
-      
+      try:
+        method = getattr(self.__ssh,target['action'])
+        sshAnswer = method(target['args'])
+      except:
+        self.__console.writeErrorInfo(f"{colors.WARNING}Action {colors.FAIL}{target['action']} {colors.WARNING}does not exist !!")
+
       status = self.__compareAnswers(sshAnswer,modAnswer,target['returnFormat'])
       self.__csvWriter.writeAnswer({'target':target['target'],'modbusAnswer':modAnswer,'sshAnswer':sshAnswer,'status':status})
       ramUsage = self.__getRamUsage()
       cpuUsage = self.__getCPUUsage()
       testInfo = {'cpu':self.__cpuUsageFormat(float(cpuUsage)),'currentTime':self.__timeFormat(time.time()-self.__startTime),'moduleName':target['module'],'target':target['target'],'modAnswer':modAnswer,'sshAnswer':sshAnswer,'passed':self.__passed,'failed':self.__failed,'ramUsage':self.__ramUsageFormat(ramUsage),'testCount':self.__testingCout}
       self.__console.writeTestInfo(testInfo)
-
       if(float(ramUsage)>float(self.__higestRamUsage)):
         self.__higestRamUsage = ramUsage
       if(float(cpuUsage)>float(self.__higestCpuUsage)):
@@ -181,7 +182,7 @@ class Testing:
     else:
       self.__console  = consoleWriting.writing()
       self.__console.startWriting()
-      deviceInfo = {'address':self.__connectionInfo['address'],'port':self.__connectionInfo['port'],'modPort':self.__connectionInfo['modPort'],'deviceName':deviceName,'modules':modulesList}
+      deviceInfo = {'address':self.__connectionInfo['address'],'port':self.__connectionInfo['port'],'modPort':self.__connectionInfo['modPort'],'deviceName':deviceName}
       self.__csvWriter = CSV.formatData(deviceInfo)
       self.__csvWriter.openNewWriter()
       self.__csvWriter.writeTitle()
@@ -191,6 +192,7 @@ class Testing:
         passed = 0
         failed = 0
         self.__higestRamUsage = 0
+        self.__higestCpuUsage = 0
         self.__testingCout += 1
         if(self.__running == True):
           self.__csvWriter.writeNewHeader(self.__testingCout)

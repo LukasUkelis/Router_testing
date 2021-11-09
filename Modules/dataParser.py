@@ -4,7 +4,7 @@ import Modules.colors as colors
 class Data:
   
   __data = None
-  __dataPath  = 'data2.json'
+  __dataPath  = 'data.json'
   __deviceID = -1
   __targets = 0
 

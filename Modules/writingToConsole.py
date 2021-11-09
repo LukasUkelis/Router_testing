@@ -1,5 +1,4 @@
 import Modules.colors as colors
-# import colors
 import time
 
 class writing:
@@ -34,7 +33,7 @@ class writing:
                                                            
                                                            
                                                            
-{colors.FAIL}{errorInfo}{colors.ENDC}        
+{errorInfo}{colors.ENDC}        
                                                            
                                                            
                                                   
@@ -76,6 +75,6 @@ Failed: {colors.FAIL}{testInfo['failed']}{colors.ENDC}
 
 Test duration: {colors.OKBLUE}{testInfo['currentTime']}{colors.ENDC} 
 Test count: {colors.OKBLUE}{testInfo['testCount']}{colors.ENDC}  
-Memory usage: {testInfo['ramUsage']}  
-CPU usage: {testInfo['cpu']} 
+Memory usage: {testInfo['ramUsage']}       
+CPU usage: {testInfo['cpu']}        
 """)

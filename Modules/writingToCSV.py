@@ -44,7 +44,6 @@ class formatData:
       self.__writer.write("Address: {address}\r\n".format(address=self.__deviceInfo['address']))
       self.__writer.write("Port: {address}\r\n".format(address=self.__deviceInfo['port']))
       self.__writer.write("Modbus port: {address}\r\n\r\n".format(address=self.__deviceInfo['modPort']))
-      self.__writer.write("Testing modules: {address}\r\n\r\n".format(address=self.__deviceInfo['modules']))
       self.__writer.flush()
 
   def writeAnswer(self, answerData):

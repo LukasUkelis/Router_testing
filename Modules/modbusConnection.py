@@ -3,7 +3,7 @@ import Modules.writingToConsole as consoleWriting
 import Modules.colors as colors
 import codecs
 import struct
-import time
+
 class Connection:
   __connectionInfo = None
   __client = None
@@ -49,7 +49,7 @@ class Connection:
     answer = struct.unpack('!f', bytes.fromhex(answer[2:len(answer)]))[0]
     return f"{answer}"
 
-  def formatsignal(self,values):
+  def formatdecimal(self,values):
     answer = ""
     value = values[1]
     temp = bin(~value & 0xFFFF )
