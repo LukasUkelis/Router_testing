@@ -31,13 +31,11 @@ class execution:
       return self.__ssh.executeCommand("uci get system.@system[0].routername")
     if(args['get'] == "uptime"):
       return self.__ssh.executeCommand("ubus call system info | jsonfilter -e '@.uptime'")
-
+    if(args['get'] == "serial"):
+      return self.__ssh.executeCommand("mnf_info -s")
 
   def executeCommand(self,command):
     return self.__ssh.executeCommand(command)
-  
-  def getModules(self):
-    return self.__ssh.getModules()
 
   def GPS_info(self,args):
     return self.__ssh.executeCommand(f"ubus call gpsd position | jsonfilter -e '@.{args['get']}'")
@@ -47,3 +45,27 @@ class execution:
       return self.__ssh.executeCommand("gsmctl -q")
     if(args['get'] == "activeSim"):
       return self.__ssh.executeCommand("ubus call sim get | jsonfilter -e '@.sim'")
+    if(args['get'] == "GSMoperator"):
+      return self.__ssh.executeCommand("gsmctl -o")
+    if(args['get'] == "temperature"):
+      return self.__ssh.executeCommand("gsmctl -c")
+
+  def getRamUsage(self):
+    total = int(self.__ssh.executeCommand("ubus call system info | jsonfilter -e '@.memory.total'"))
+    free = int(self.__ssh.executeCommand("ubus call system info | jsonfilter -e '@.memory.free'"))
+    using = int(total - free)
+    return round(using / total * 100,2)
+
+  def getCpuUsage(self):
+    return self.__ssh.executeCommand("cpu_usage_script.sh")
+
+  def getModules(self):
+    modules = ['system']
+    lines = self.__ssh.getRawAnswer("uci show /etc/config/hwinfo")
+    for line in lines:
+      line = line.strip("\n")
+      l = len(line)
+      check = line[l-2:l-1]
+      if(check == "1"):
+        modules.append(line[14:l-4])
+    return modules

@@ -13,9 +13,8 @@ def main():
     connectionInfo=argumetsParser()
     if not connectionInfo:
         return False
-    else:
-        signal.signal(signal.SIGINT, stop)
-        __test.startTesting(connectionInfo)
+    signal.signal(signal.SIGINT, stop)
+    __test.startTesting(connectionInfo)
 
 def argumetsParser():
     __address = ""

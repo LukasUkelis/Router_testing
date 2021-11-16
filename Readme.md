@@ -37,16 +37,22 @@ Press crtl + c to stop the program.
         + accuracy -> GPS accuracy
         + speed -> GPS speed
         + satellites -> GPS satallite count
+
 + mobile_Info
     + get
         + signal -> Mobile signal strength (RSSI in dBm)
         + activeSim -> Active SIM card
+        + GSMoperator -> GSM operator name
+        + temperature -> System temperature (in 0.1 °C)
+
 + device_info
     + get
         + mac -> LAN MAC address
         + name -> Router name
         + hostname -> Router hostname
         + uptime -> Router uptime
+        + serial -> Router serial number
+
 + sentData
     + sim 
         + 1 -> get sent data from sim 1
@@ -58,6 +64,7 @@ Press crtl + c to stop the program.
     + current
         + True -> enables current period (day = today).
         + False -> disenables current period (day = 24h).
+
 + receivedData
     + sim 
         + 1 -> get received data from sim 1
@@ -69,6 +76,7 @@ Press crtl + c to stop the program.
     + current
         + True -> enables current period (day = today).
         + False -> disenables current period (day = 24h).
+        
 ###### Configuration examples:
 
 ```

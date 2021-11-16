@@ -48,22 +48,12 @@ class Connection:
       return False
     return self.__parsingLines(lines)
   
-  def getModules(self):
+  def getRawAnswer(self,command):
     try:
-      command = "uci show /etc/config/hwinfo"
       stdin, stdout, stderr = self.__ssh.exec_command(command)
-      lines = stdout.readlines()
+      return stdout.readlines()
     except:
-      return False
-    modules = []
-    for line in lines:
-      line = line.strip("\n")
-      l = len(line)
-      check = line[l-2:l-1]
-      if(check == "1"):
-        modules.append(line[14:l-4])
-    return modules
-
+      return False 
 
     
   def closeConnection(self):

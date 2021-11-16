@@ -2,9 +2,45 @@
   "devices":
   [
     {
-      "device":"RUT",
+      "device":"RUTX",
       "modules":
       [
+        {
+          "target" : "Router serial number",
+          "returnFormat" : "string",
+          "registerAddress" : "39",
+          "numberOfReg" : "16",
+          "module" : "system" ,
+          "action" : "device_Info",
+          "args" : 
+          {
+            "get" : "serial"
+          }
+        },
+        {
+          "target" : "GSM operator name",
+          "returnFormat" : "string",
+          "registerAddress" : "23",
+          "numberOfReg" : "16",
+          "module" : "mobile" ,
+          "action" : "mobile_Info",
+          "args" : 
+          {
+            "get" : "GSMoperator"
+          }
+        },
+        {
+          "target" : "System temperature (in 0.1 °C)",
+          "returnFormat" : "int",
+          "registerAddress" : "5",
+          "numberOfReg" : "2",
+          "module" : "mobile" ,
+          "action" : "mobile_Info",
+          "args" : 
+          {
+            "get" : "temperature"
+          }
+        },
         {
           "target" : "System uptime",
           "returnFormat" : "int",
